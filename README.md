@@ -32,7 +32,3 @@ Features:
   
 *Utility:
   -TrailRenderWith2DCollider: The name say everthing, lol. You only need add this script to one GameObject.
-
-CopyRight:
-Attribution-ShareAlike 4.0 International
-http://creativecommons.org/licenses/by-sa/4.0/
