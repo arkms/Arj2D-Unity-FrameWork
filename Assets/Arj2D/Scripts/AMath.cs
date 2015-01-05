@@ -3,16 +3,6 @@
 public static class AMath
 {
     /// <summary>
-    /// Cast from Vector3 to Vector2
-    /// </summary>
-    /// <param name="_vector3">Vector3 to cast to Vector2</param>
-    /// <returns>return Vector2</returns>
-    public static Vector2 vector2(Vector3 _vector3)
-    {
-        return new Vector2(_vector3.x, _vector3.y);
-    }
-
-    /// <summary>
     /// Calculate the distance between two vector3, ignoring the Z
     /// </summary>
     /// <param name="_vA"></param>
@@ -143,16 +133,5 @@ public static class AMath
             i += _limitRow;
         }
         return tmp;
-    }
-
-    /// <summary>
-    /// Flip one Sprite
-    /// </summary>
-    /// <param name="_trasform">Transfrom from sprite to Flip</param>
-    public static void Flip(Transform _trasform)
-    {
-        Vector3 theScale = _trasform.localScale;
-        theScale.x *= -1;
-        _trasform.localScale = theScale;
     }
 }

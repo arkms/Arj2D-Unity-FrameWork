@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-//using System.Collections;
 
 public static class UnityEngineExtensions
 {
@@ -45,6 +44,16 @@ public static class UnityEngineExtensions
         Vector3 temp = _transform.position;
         temp.z += _offsetZ;
         _transform.position = temp;
+    }
+    /// <summary>
+    /// Flip a transform
+    /// </summary>
+    /// <param name="_transform"></param>
+    public static void Flip(this Transform _transform)
+    {
+        Vector3 theScale = _transform.localScale;
+        theScale.x *= -1;
+        _transform.localScale = theScale;
     }
 
 
@@ -109,6 +118,12 @@ public static class UnityEngineExtensions
         result.SetPixels(newImage);
         result.Apply();
         return result;
+    }
+
+    //VECTOR3
+    public static Vector2 ToVector2(this Vector3 _vector3)
+    {
+        return new Vector2(_vector3.x, _vector3.y);
     }
 
 }

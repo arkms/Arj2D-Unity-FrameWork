@@ -82,7 +82,6 @@ public class MonoBehaviour2D : MonoBehaviour
         }
     }
 
-
     private Transform trasfor;
     protected new Transform transform
     {
