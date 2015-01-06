@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ public class SpriteOrder : EditorWindow
     List<Renderer> re = new List<Renderer>();
     List<Texture2D> Preview = new List<Texture2D>();
     Vector2 scrollbar;
+    string[] LayerNames;
+    int lastID = -1;
 
 
     [MenuItem("Arj2D/SpriteOrder")]
@@ -31,6 +33,7 @@ public class SpriteOrder : EditorWindow
                 re.Add(tmpRe);
                 Preview.Add(AssetPreview.GetAssetPreview(sr.sprite));
             }
+            LayerNames = GetSortingLayerNames();
         }
     }
 
@@ -43,11 +46,15 @@ public class SpriteOrder : EditorWindow
             GUILayout.Label(re[i].gameObject.name, GUILayout.MaxWidth(35f));
             GUILayout.Label(Preview[i], GUILayout.MaxWidth(35f), GUILayout.MaxHeight(35f));
             GUILayout.Label("Layer ID: ", GUILayout.MaxWidth(58f));
-            re[i].sortingLayerID = EditorGUILayout.Popup(re[i].sortingLayerID, GetSortingLayerNames(), GUILayout.MaxWidth(100f));
+            re[i].sortingLayerID = EditorGUILayout.Popup(re[i].sortingLayerID, LayerNames, GUILayout.MaxWidth(100f));
             GUILayout.Label("Sorting order: ", GUILayout.MaxWidth(85f));
-            re[i].sortingOrder = EditorGUILayout.IntField(re[i].sortingOrder, GUILayout.MaxWidth(40f), GUILayout.MinWidth(40f));
+            lastID= EditorGUILayout.IntField(re[i].sortingOrder, GUILayout.MaxWidth(40f), GUILayout.MinWidth(40f));
+            if (re[i].sortingOrder != lastID)
+            {
+                re[i].sortingOrder = lastID;
+                AssetDatabase.Refresh();
+            }
             EditorGUILayout.EndHorizontal();
-            AssetDatabase.Refresh();
         }
         EditorGUILayout.EndScrollView();
     }

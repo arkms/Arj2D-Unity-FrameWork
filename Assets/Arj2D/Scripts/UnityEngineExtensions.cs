@@ -46,13 +46,24 @@ public static class UnityEngineExtensions
         _transform.position = temp;
     }
     /// <summary>
-    /// Flip a transform
+    /// Flip a transform, use for Flip Sprite
     /// </summary>
-    /// <param name="_transform"></param>
     public static void Flip(this Transform _transform)
     {
         Vector3 theScale = _transform.localScale;
         theScale.x *= -1;
+        _transform.localScale = theScale;
+    }
+    /// <summary>
+    /// Flip a transform, use for Flip Sprite
+    /// </summary>
+    public static void Flip(this Transform _transform, bool _facingRight)
+    {
+        Vector3 theScale = _transform.localScale;
+        if (_facingRight)
+            theScale.x *= 1;
+        else
+            theScale.x *= -1;
         _transform.localScale = theScale;
     }
 
@@ -125,5 +136,4 @@ public static class UnityEngineExtensions
     {
         return new Vector2(_vector3.x, _vector3.y);
     }
-
 }
