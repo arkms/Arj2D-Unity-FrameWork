@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class Menu_childInWorld {
+public class Arj2Debug {
 
     [MenuItem("Arj2D/Debug/World Position")]
     public static void PrintGlobalPosition()
@@ -58,5 +58,14 @@ public class Menu_childInWorld {
             else
                 Debug.Log("ZERO");
         }
+    }
+
+    [MenuItem("Arj2D/GameObject/Camera2D")]
+    public static void Camera2D()
+    {
+        GameObject Gocam = new GameObject("Camera2D");
+        Camera cam = Gocam.AddComponent<Camera>();
+        cam.orthographic = true;
+        cam.farClipPlane = 200;
     }
 }
