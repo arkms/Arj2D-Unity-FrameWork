@@ -57,7 +57,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 
-namespace BlowFishCS
+namespace Arj2D
 {
     public class BlowFish
     {

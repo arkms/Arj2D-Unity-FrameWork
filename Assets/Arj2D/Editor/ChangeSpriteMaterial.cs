@@ -2,39 +2,42 @@
 using System.Collections;
 using UnityEditor;
 
-public class ChangeSpriteMaterial : EditorWindow
+namespace Arj2D
 {
-    Material new_mat;
-    GameObject go;
-
-    [MenuItem("Arj2D/ChangeSpriteMAterial")]
-    public static void Init()
+    public class ChangeSpriteMaterial : EditorWindow
     {
-        EditorWindow window= EditorWindow.GetWindow(typeof(ChangeSpriteMaterial), true, "ChageSpriteMaterial");
-        window.maxSize = new Vector2(215f, 90f);
-        window.minSize = window.maxSize;
-    }
+        Material new_mat;
+        GameObject go;
 
-    /*void OnEnable()
-    {
-    }*/
-
-    void OnGUI()
-    {
-        GUILayout.Label("Change Render in one GameObject and childrens with one new Material");
-        new_mat = (Material)EditorGUILayout.ObjectField(new_mat, typeof(Material), false);
-        go = (GameObject)EditorGUILayout.ObjectField(go, typeof(GameObject), true);
-        if (GUILayout.Button("ChangeSprite"))
+        [MenuItem("Arj2D/SpriteUtil/ChangeSpriteMAterial")]
+        public static void Init()
         {
-            if (new_mat == null || go == null)
+            EditorWindow window = EditorWindow.GetWindow(typeof(ChangeSpriteMaterial), true, "ChageSpriteMaterial");
+            window.maxSize = new Vector2(215f, 90f);
+            window.minSize = window.maxSize;
+        }
+
+        /*void OnEnable()
+        {
+        }*/
+
+        void OnGUI()
+        {
+            GUILayout.Label("Change Render in one GameObject and childrens with one new Material");
+            new_mat = (Material)EditorGUILayout.ObjectField(new_mat, typeof(Material), false);
+            go = (GameObject)EditorGUILayout.ObjectField(go, typeof(GameObject), true);
+            if (GUILayout.Button("ChangeSprite"))
             {
-                Debug.LogError("Assign new material and/or GameObject");
-            }
-            Undo.RegisterCreatedObjectUndo(go, "CambioMaterial");
-            SpriteRenderer[] srs = go.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer sr in srs)
-            {
-                sr.material = new_mat;
+                if (new_mat == null || go == null)
+                {
+                    Debug.LogError("Assign new material and/or GameObject");
+                }
+                Undo.RegisterCreatedObjectUndo(go, "CambioMaterial");
+                SpriteRenderer[] srs = go.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer sr in srs)
+                {
+                    sr.material = new_mat;
+                }
             }
         }
     }

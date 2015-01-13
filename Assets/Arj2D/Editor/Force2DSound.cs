@@ -1,11 +1,14 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class Force2DSound : AssetPostprocessor
+namespace Arj2D
 {
-    public void OnPreprocessAudio()
+    public class Force2DSound : AssetPostprocessor
     {
-        AudioImporter ai = assetImporter as AudioImporter;
-        ai.threeD = false;
+        public void OnPreprocessAudio()
+        {
+            AudioImporter ai = assetImporter as AudioImporter;
+            ai.threeD = false;
+        }
     }
 }
