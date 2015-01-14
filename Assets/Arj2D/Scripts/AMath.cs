@@ -136,5 +136,49 @@ namespace Arj2D
             }
             return tmp;
         }
+
+        /// <summary>
+        /// Neutralizes the an angle.
+        /// </summary>
+        /// <returns>The neutralized angle.</returns>
+        /// <param name="angle">The source angle.</param>
+        public static float NeutralizeAngle(float _angle)
+        {
+            if (_angle < 0)
+                return (_angle % 360.0f) * -1;
+            else
+                return _angle % 360.0f;
+        }
+
+        /// <summary>
+        /// Calculates the CIE76 delta-e value: http://en.wikipedia.org/wiki/Color_difference#CIE76
+        /// </summary>
+        /// <param name="_colorA">Color A</param>
+        /// <param name="_colorB">Color B</param>
+        /// <returns>delta compare value</returns>
+        public float ColorCompare(Color _colorA, Color _colorB)
+        {
+            float differences = Compare_dif(_colorA.r, _colorB.r) + Compare_dif(_colorA.g, _colorB.g) + Compare_dif(_colorA.b, _colorB.b);
+            return Mathf.Sqrt(differences);
+        }
+        private float Compare_dif(float _a, float _b)
+        {
+            return (_a - _b) * (_a - _b);
+        }
+
+        /// <summary>
+        /// Percentage between two colors
+        /// </summary>
+        /// <param name="_colorA">Color A</param>
+        /// <param name="_colorB">Color B</param>
+        /// <returns>Percentage (0 - 1)</returns>
+        public static float ColorPercentage(Color _colorA, Color _colorB)
+        {
+            float R = _colorA.r / _colorB.r;
+            float G = _colorA.g / _colorB.g;
+            float B = _colorA.b / _colorB.b;
+            float A = _colorA.a / _colorB.a;
+            return (R + G + B + A) / 4.0f;
+        }
     }
 }
