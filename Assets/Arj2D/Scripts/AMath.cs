@@ -156,12 +156,12 @@ namespace Arj2D
         /// <param name="_colorA">Color A</param>
         /// <param name="_colorB">Color B</param>
         /// <returns>delta compare value</returns>
-        public float ColorCompare(Color _colorA, Color _colorB)
+        public static float ColorCompare(Color _colorA, Color _colorB)
         {
             float differences = Compare_dif(_colorA.r, _colorB.r) + Compare_dif(_colorA.g, _colorB.g) + Compare_dif(_colorA.b, _colorB.b);
             return Mathf.Sqrt(differences);
         }
-        private float Compare_dif(float _a, float _b)
+        private static float Compare_dif(float _a, float _b)
         {
             return (_a - _b) * (_a - _b);
         }
