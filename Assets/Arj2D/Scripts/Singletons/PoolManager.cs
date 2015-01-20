@@ -87,6 +87,7 @@ public class PoolManager : MonoBehaviour
         if (instance == null)
         {
             GameObject go = new GameObject("PoolManager");
+            DontDestroyOnLoad(go);
             instance = go.AddComponent<PoolManager>();
             transform_ = go.GetComponent<Transform>();
             Pool = new List<List<GameObject>>();
@@ -190,11 +191,12 @@ public class PoolManager : MonoBehaviour
     /// <param name="_go">GameObject to destroy</param>
     public static void Despawn(GameObject _go)
     {
-        string GameOjectName= _go.name.Remove(_go.name.Length - 7);
+        string GameObjectName = _go.name.Remove(_go.name.IndexOf('_'));
         int index = _go.GetInstanceID();
         for (int i = 0; i < Pool.Count; i++)
         {
-            if(Prefabs[i].name == GameOjectName)
+            if (Prefabs[i].name == GameObjectName)
+            {
                 for (int j = 0; j < Pool[i].Count; j++)
                 {
                     if (Pool[i][j].GetInstanceID() == index)
@@ -203,11 +205,13 @@ public class PoolManager : MonoBehaviour
                         return;
                     }
                 }
+                Debug.LogWarning("That prefab is not in PoolManager");
+            }
         }
     }
 
     /// <summary>
-    /// Get ID of Prefab of GameObject in Prefab
+    /// Get ID of Prefab of GameObject in Prefab,, caution use Prefabs with exactly same name
     /// </summary>
     /// <param name="_go">GameObject to try get prefab</param>
     /// <returns>ID of Prefab or -1 if cant find it. Its better cached it</returns>
@@ -246,6 +250,33 @@ public class PoolManager : MonoBehaviour
         for (int i = 0; i < Pool[index].Count; i++)
         {
             Pool[index][i].SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Clear and destroy in poolmanager all GameObject of one Prefab
+    /// </summary>
+    /// <param name="_id">ID of Prefab in PoolManager</param>
+    public static void ClearAndDestroy(int _id)
+    {
+        for (int i = 0; i < Pool[_id].Count; i++)
+        {
+            Destroy(Pool[_id][i]);
+            Pool[_id][i] = null;
+        }
+    }
+
+    /// <summary>
+    /// Prefab to clear ande destryoy
+    /// </summary>
+    /// <param name="_prefab"></param>
+    public static void ClearAndDestroy(GameObject _prefab)
+    {
+        int index = GetPoolManagerIDByPreafab(_prefab);
+        for (int i = 0; i < Pool[index].Count; i++)
+        {
+            Destroy(Pool[index][i]);
+            Pool[index][i] = null;
         }
     }
 
