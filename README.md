@@ -6,7 +6,7 @@ My english is not perfect,i try to do my best, please help me to improve the doc
 
 Information:
 -----
-Unity 2D FrameWork Version 0.8
+Unity 2D FrameWork Version 0.8.7
 
 A free Unity 2D FrameWork that extend and bring more utilities for work in 2D in Unity.
 Suggestions and any questions are welcome, leave it issues.
