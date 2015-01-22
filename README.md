@@ -6,7 +6,7 @@ My english is not perfect,i try to do my best, please help me to improve the doc
 
 Information:
 -----
-Unity 2D FrameWork Version 0.8.7
+Unity 2D FrameWork Version 0.8.8
 
 A free Unity 2D FrameWork that extend and bring more utilities for work in 2D in Unity.
 Suggestions and any questions are welcome, leave it issues.
@@ -21,6 +21,7 @@ Suggestions and any questions are welcome, leave it issues.
   - QuadToSpriteSize: Can rezise a select GameObject (Sprite or Quad) to fill all screen of the main camera in orto or perspective mode.
   - SpriteOrder.cs: EditorWindow that help to manager all SpriteOrder (sortingLayerID and sortingOrder) of all SpriteRender in Scene.
   - SpriteShadow.cs: EditorWindow that show all Sprite in Scene and can enable or disable cast and recive shadow (Need spriteShadow Shader).
+  - TiledMapping.cs: A a simple tiled editor inside Unity for create maps in 2D. a Update for can select a prefab folder coming.
   
 * Physics Material:
   - Plataform.
