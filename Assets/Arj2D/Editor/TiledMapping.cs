@@ -6,8 +6,7 @@ public class TiledMapping : EditorWindow
 {
     //vars
     private GameObject Father;
-    private GameObject PrefabToUse;
-    private int Columns= 10;
+    private int Columns = 10;
     private int Rows = 10;
     private float TileWidth = 1f;
     private float TileHeight = 1f;
@@ -17,11 +16,17 @@ public class TiledMapping : EditorWindow
     private Rect Rect_guiDraw;
     private Rect Rect_guiErase;
     private string NameFather = "TiledMap";
+    private string PrefabFolder;
+    //prefabs
+    private GUIContent[] PrefabPreview;
+    private List<GameObject> Prefabs = new List<GameObject>();
+    private Vector2 ScrollPosition = Vector2.zero;
+    private int indexPrefab = -1; // -1= any prefab loaded
 
     [MenuItem("Arj2D/TiledEditor")]
     public static void Init()
     {
-        EditorWindow window= EditorWindow.GetWindow(typeof(TiledMapping), false, "Tiled Map");
+        EditorWindow window = EditorWindow.GetWindow(typeof(TiledMapping), false, "Tiled Map");
         window.minSize = new Vector2(250f, 190f);
         window.Show();
     }
@@ -43,8 +48,8 @@ public class TiledMapping : EditorWindow
     {
         //father gui
         EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Father name:", GUILayout.MaxWidth(80f));
-            NameFather = EditorGUILayout.TextField(NameFather, GUILayout.MaxWidth(100f));
+        GUILayout.Label("Father name:", GUILayout.MaxWidth(80f));
+        NameFather = EditorGUILayout.TextField(NameFather, GUILayout.MaxWidth(100f));
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Create or Find", GUILayout.MaxWidth(100f), GUILayout.MinWidth(100f)))
@@ -71,40 +76,59 @@ public class TiledMapping : EditorWindow
 
         //data gui
         EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Rows(X):", GUILayout.MaxWidth(80f));
-            this.Rows = EditorGUILayout.IntField(this.Rows, GUILayout.MaxWidth(100f));
-            if (this.Rows < 1)
-                this.Rows = 1;
+        GUILayout.Label("Rows(X):", GUILayout.MaxWidth(80f));
+        this.Rows = EditorGUILayout.IntField(this.Rows, GUILayout.MaxWidth(100f));
+        if (this.Rows < 1)
+            this.Rows = 1;
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Columns(Y):", GUILayout.MaxWidth(80f));
-            this.Columns= EditorGUILayout.IntField(this.Columns, GUILayout.MaxWidth(100f));
-            if (this.Columns < 1)
-                this.Columns = 1;
+        GUILayout.Label("Columns(Y):", GUILayout.MaxWidth(80f));
+        this.Columns = EditorGUILayout.IntField(this.Columns, GUILayout.MaxWidth(100f));
+        if (this.Columns < 1)
+            this.Columns = 1;
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Tile Width:", GUILayout.MaxWidth(80f));
-            this.TileWidth= EditorGUILayout.FloatField(this.TileWidth, GUILayout.MaxWidth(100f));
-            if (this.TileWidth < 0.1f)
-                this.TileWidth = 0.1f;
+        GUILayout.Label("Tile Width:", GUILayout.MaxWidth(80f));
+        this.TileWidth = EditorGUILayout.FloatField(this.TileWidth, GUILayout.MaxWidth(100f));
+        if (this.TileWidth < 0.1f)
+            this.TileWidth = 0.1f;
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Tile Height:", GUILayout.MaxWidth(80f));
-            this.TileHeight= EditorGUILayout.FloatField(this.TileHeight, GUILayout.MaxWidth(100f));
-            if (this.TileHeight < 0.1f)
-                this.TileHeight = 0.1f;
+        GUILayout.Label("Tile Height:", GUILayout.MaxWidth(80f));
+        this.TileHeight = EditorGUILayout.FloatField(this.TileHeight, GUILayout.MaxWidth(100f));
+        if (this.TileHeight < 0.1f)
+            this.TileHeight = 0.1f;
         EditorGUILayout.EndHorizontal();
 
         //prefab gui
         GUILayout.Space(15.0f);
-        EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Prefab to use:", GUILayout.MaxWidth(80f));
-            PrefabToUse= EditorGUILayout.ObjectField(PrefabToUse, typeof(GameObject), false, GUILayout.MaxWidth(160f)) as GameObject;
-        EditorGUILayout.EndHorizontal();
-        GUILayout.Space(5.0f);
-        if (GUILayout.Button("Calculate Width and Height of Prefab"))
+        if (GUILayout.Button("Change Prefab folder"))
         {
-            CalculateHeightAndWidth();
+            PrefabFolder = EditorUtility.OpenFolderPanel("Folder", Application.dataPath, "Prefabs");
+            if (!String.IsNullOrEmpty(PrefabFolder))
+            {
+                UpdatePreviewPrefabs();
+            }
+        }
+        if (indexPrefab != -1)
+        {
+            if (GUILayout.Button("Calculate Width and Height of Prefab"))
+            {
+                CalculateHeightAndWidth();
+            }
+            GUILayout.Space(5.0f);
+            if (PrefabPreview.Length > 0)
+            {
+                EditorGUIUtility.SetIconSize(new Vector2(50.0f, 50.0f));
+                ScrollPosition = GUILayout.BeginScrollView(ScrollPosition, GUILayout.Width(position.width));
+                GUILayout.Label("Prefabs: ", EditorStyles.boldLabel);
+                indexPrefab = GUILayout.SelectionGrid(indexPrefab, PrefabPreview, 5);
+                GUILayout.EndScrollView();
+            }
+        }
+        else
+        {
+            EditorGUILayout.HelpBox("Select a folder to load", MessageType.Error);
         }
     }
 
@@ -136,7 +160,7 @@ public class TiledMapping : EditorWindow
             // if mouse down or mouse drag
             if (current.type == EventType.MouseDown || current.type == EventType.MouseDrag)
             {
-                if (PrefabToUse == null)
+                if (indexPrefab == -1)
                 {
                     Debug.LogWarning("Select Prefab to use first");
                     return;
@@ -163,8 +187,8 @@ public class TiledMapping : EditorWindow
     void DrawGUI()
     {
         Handles.BeginGUI();
-            GUI.Label(Rect_guiDraw, "Left Mouse Button: Draw");
-            GUI.Label(Rect_guiErase, "Right Mouse Button: Erase");
+        GUI.Label(Rect_guiDraw, "Left Mouse Button: Draw");
+        GUI.Label(Rect_guiErase, "Right Mouse Button: Erase");
         Handles.EndGUI();
     }
 
@@ -206,10 +230,10 @@ public class TiledMapping : EditorWindow
 
     private void CalculateHeightAndWidth()
     {
-        if (PrefabToUse != null)
+        if (indexPrefab != -1)
         {
-            this.TileWidth = PrefabToUse.renderer.bounds.size.x;
-            this.TileHeight = PrefabToUse.renderer.bounds.size.y;
+            this.TileWidth = Prefabs[indexPrefab].renderer.bounds.size.x;
+            this.TileHeight = Prefabs[indexPrefab].renderer.bounds.size.y;
         }
         else
         {
@@ -226,7 +250,7 @@ public class TiledMapping : EditorWindow
 
         int col = (int)pos.x;
         int row = (int)pos.y;
-        
+
         //limits
         if (row < 0)
             row = 0;
@@ -292,12 +316,12 @@ public class TiledMapping : EditorWindow
         }
 
         //create one
-        GameObject go = Instantiate(PrefabToUse, new Vector3(MouseInTiled.x, MouseInTiled.y, this.Depth), PrefabToUse.transform.rotation) as GameObject;
+        GameObject go = Instantiate(Prefabs[indexPrefab], new Vector3(MouseInTiled.x, MouseInTiled.y, this.Depth), Prefabs[indexPrefab].transform.rotation) as GameObject;
 
         //set
         go.transform.parent = Father.transform;
         Vector2 TiledPos = GetTilePositionFromMouseLocation();
-        go.name = string.Format(PrefabToUse.name + "_{0}_{1}", TiledPos.x, TiledPos.y);
+        go.name = string.Format(Prefabs[indexPrefab].name + "_{0}_{1}", TiledPos.x, TiledPos.y);
         Undo.RegisterCreatedObjectUndo(go, "Object Create");
     }
 
@@ -309,5 +333,39 @@ public class TiledMapping : EditorWindow
         {
             Undo.DestroyObjectImmediate(obj);
         }
+    }
+
+    //Read and create preview of prefabs
+    void UpdatePreviewPrefabs()
+    {
+        string[] assetsPaths = AssetDatabase.GetAllAssetPaths();
+        string foldertoCheck = PrefabFolder.Remove(0, PrefabFolder.IndexOf("Asset"));
+        List<GUIContent> guicontent = new List<GUIContent>();
+        Texture2D previewTmp;
+
+        //tmp
+        UnityEngine.Object obj;
+
+        //see directory,, and get all prefabs
+        for (int i = 0; i < assetsPaths.Length; i++)
+        {
+            if (assetsPaths[i].StartsWith(foldertoCheck))
+                if (assetsPaths[i] != foldertoCheck)
+                {
+                    obj = Resources.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
+                    if (obj != null) //check if is a prefab
+                    {
+                        //PrefabPreview_holder.Add(AssetPreview.GetAssetPreview(obj));
+                        previewTmp = AssetPreview.GetAssetPreview(obj);
+                        //guicontent.Add(new GUIContent(PrefabPreview_holder[PrefabPreview_holder.Count - 1], obj.name));
+                        guicontent.Add(new GUIContent(previewTmp, obj.name));
+                        Prefabs.Add((GameObject)obj);
+                    }
+                }
+        }
+
+        //add to preview in gui
+        PrefabPreview = guicontent.ToArray();
+        indexPrefab = 0;
     }
 }
