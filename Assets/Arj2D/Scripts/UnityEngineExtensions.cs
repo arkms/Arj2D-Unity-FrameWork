@@ -87,6 +87,17 @@ namespace Arj2D
             int objLayerMask = (1 << _gameObject.layer);
             return (_layerMask.value & objLayerMask) > 0;
         }
+        public static T[] GetComponentsOnlyInChildren<T>(this GameObject _gameObject, bool _includeInactive= true) where T : Component
+        {
+            T[] tmp = _gameObject.GetComponentsInChildren<T>(_includeInactive);
+            if(tmp[0].gameObject.GetInstanceID() == _gameObject.GetInstanceID())
+            {
+                System.Collections.Generic.List<T> list= new System.Collections.Generic.List<T>(tmp);
+                list.RemoveAt(0);
+                return list.ToArray();
+            }
+            return tmp;
+        }
         #endregion
 
         #region TEXTURE2D
@@ -143,7 +154,7 @@ namespace Arj2D
         #endregion
 
         #region RENDERER
-        public static bool IsVisibleFrom(this Renderer _renderer, Camera camera)
+        public static bool IsVisibleInCamera(this Renderer _renderer, Camera camera)
         {
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(camera);
             return GeometryUtility.TestPlanesAABB(planes, _renderer.bounds);
@@ -151,7 +162,7 @@ namespace Arj2D
         #endregion
 
         #region SPRITERENDER
-        public static bool IsVisibleFrom(this SpriteRenderer _spriteRenderer, Camera _camera)
+        public static bool IsVisibleInCamera(this SpriteRenderer _spriteRenderer, Camera _camera)
         {
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(_camera);
             return GeometryUtility.TestPlanesAABB(planes, _spriteRenderer.bounds);
