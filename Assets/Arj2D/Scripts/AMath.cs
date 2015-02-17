@@ -180,5 +180,42 @@ namespace Arj2D
             float A = _colorA.a / _colorB.a;
             return (R + G + B + A) / 4.0f;
         }
+
+        /// <summary>
+        /// Fix a BoxCollider2D that encapsulate all childrens,, NOTE: Dont include the Father GameObject
+        /// </summary>
+        /// <param name="_go">GameObject with BoxCollider2D</param>
+        public static void BoxColliderFit(GameObject _go)
+        {
+            if (!(_go.collider2D is BoxCollider2D))
+            {
+                Debug.LogWarning("Add a BoxColldier2D first");
+                return;
+            }
+
+            bool FirstBound = false;
+            Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
+
+            for (int i = 0; i < _go.transform.childCount; ++i)
+            {
+                Renderer childRenderer = _go.transform.GetChild(i).renderer;
+                if (childRenderer != null)
+                {
+                    if (FirstBound)
+                    {
+                        bounds.Encapsulate(childRenderer.bounds);
+                    }
+                    else
+                    {
+                        bounds = childRenderer.bounds;
+                        FirstBound = true;
+                    }
+                }
+            }
+
+            BoxCollider2D collider = (BoxCollider2D)_go.collider2D;
+            collider.center = bounds.center - _go.transform.position;
+            collider.size = bounds.size;
+        }
     }
 }

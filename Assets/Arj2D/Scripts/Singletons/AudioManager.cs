@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -35,29 +34,26 @@ public class AudioManager : MonoBehaviour
             int soundEnable = PlayerPrefs.GetInt(K_sound, 1);
             if (soundEnable == 0)
             {
-                SetEnable_fx(false);
+                Sound.enabled = false;
             }
             soundEnable = PlayerPrefs.GetInt(K_music, 1);
             if (soundEnable == 0)
             {
-                SetEnable_music(false);
+                Background.enabled = false;
             }
         }
     }
 
     public static void SetEnable(bool _enable)
     {
-        Sound.enabled = _enable;
-        Background.enabled = _enable;
-        if (Background.enabled)
-        {
-            Background.Play();
-        }
+        SetEnable_fx(_enable);
+        SetEnable_music(_enable);
     }
 
     public static void SetEnable_fx(bool _enable)
     {
         Sound.enabled = _enable;
+        PlayerPrefs.SetInt(K_sound, (_enable ? 1 : 0));
     }
 
     //
@@ -72,13 +68,6 @@ public class AudioManager : MonoBehaviour
             Sound.PlayOneShot(_clip);
     }
 
-    public static void Play(AudioClip _clip, float _pitch)
-    {
-        Sound.pitch = Random.Range(1f - _pitch, 1f + _pitch);
-        Sound.PlayOneShot(_clip);
-        Sound.pitch = 1f;
-    }
-
     public static void ChangeVolumenSound(float _volumen)
     {
         Sound.volume= _volumen;
@@ -91,13 +80,13 @@ public class AudioManager : MonoBehaviour
 
 
     // BackGround ------------------------------------------------------
-    public static void PlayBackGround(AudioClip _clip)
+    public static void PlayMusic(AudioClip _clip)
     {
         if (Background.clip != _clip)
         {
             Background.Stop();
             Background.clip = _clip;
-            Resources.UnloadUnusedAssets();
+            //Resources.UnloadUnusedAssets();
             if(Background.enabled)
                 Background.Play();
         }
@@ -106,23 +95,24 @@ public class AudioManager : MonoBehaviour
     public static void SetEnable_music(bool _enable)
     {
         Background.enabled = _enable;
+        PlayerPrefs.SetInt(K_music, (_enable ? 1 : 0));
         if (Background.enabled)
         {
             Background.Play();
         }
     }
 
-    public static void StopBackGround()
+    public static void StopMusic()
     {
         Background.Stop();
     }
 
-    public static void ChangeVolumenBack(float _volumen)
+    public static void ChangeVolumenMusic(float _volumen)
     {
         Background.volume= _volumen;
     }
 
-    public static bool IsEnableBack()
+    public static bool IsEnableMusic()
     {
         return Background.enabled;
     }
