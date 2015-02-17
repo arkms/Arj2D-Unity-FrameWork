@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 //using System;
 using System.Collections.Generic;
+using Arj2D;
 
 public class PoolManager : MonoBehaviour
 {
@@ -111,6 +112,7 @@ public class PoolManager : MonoBehaviour
         go.transform.parent = transform_;
         go.SetActive(false);
         go.name = Prefabs[_id].name + "_" + Pool[_id].Count;
+        //go.SendMessage("SetIDinPool", _id, SendMessageOptions.DontRequireReceiver);
         return go;
     }
 

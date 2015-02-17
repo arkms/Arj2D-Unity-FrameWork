@@ -20,6 +20,8 @@ public class PointForceComponent : MonoBehaviour
     void Start()
     {
         myCircleCollider = this.GetComponent<CircleCollider2D>();
+        myCircleCollider.isTrigger = true;
+
         //Clamp if in editor put high value
         LinearDrag = Mathf.Clamp(LinearDrag, 0.0f, 1.0f);
         AngularDrag = Mathf.Clamp(AngularDrag, 0.0f, 1.0f);
@@ -36,6 +38,12 @@ public class PointForceComponent : MonoBehaviour
         {
             // Fetch the object rigid body
             Rigidbody2D body = objects[i].attachedRigidbody;
+
+            if (body == null)
+            {
+                objects.RemoveAt(i);
+                continue;
+            }
 
             // Calculate the force distance to the controllers current position.
             Vector2 distanceForce = transform.position - body.transform.position;

@@ -67,9 +67,11 @@ namespace Arj2D
         public static void Camera2D()
         {
             GameObject Gocam = new GameObject("Camera2D");
+            Gocam.transform.position = new Vector3(0f, 0f, -10f);
+            Gocam.tag = "MainCamera";
             Camera cam = Gocam.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.farClipPlane = 200;
+            cam.farClipPlane = 50;
         }
     }
 }

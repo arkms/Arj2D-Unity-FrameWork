@@ -19,6 +19,7 @@ public class TrailRendererWith2DCollider : MonoBehaviour {
     public Vector3 renderDirection = new Vector3(0, 0, -1); //the direction that the mesh of the trail will be rendered towards
     public bool colliderIsTrigger = true;           //determines if the collider is a trigger.  Changing this during runtime will have no effect.
     public bool colliderEnabled = true;             //determines if the collider is enabled.  Changing this during runtime will have no effect.
+    public bool RigibodyIsKinematic = false;        //determines if the rigibody is kinematic.  Changing this during runtime will have no effect.
     public bool pausing = false;                     //determines if the trail is pausing, i.e. neither creating nor destroying vertices
  
     private Transform trans;                        //transform of the object this script is attached to                    
@@ -67,7 +68,7 @@ public class TrailRendererWith2DCollider : MonoBehaviour {
  
     private void Awake() {
         //create an object and mesh for the trail
-        GameObject trail = new GameObject("Trail", new[] { typeof(MeshRenderer), typeof(MeshFilter), typeof(PolygonCollider2D) } );
+        GameObject trail = new GameObject("Trail_" + gameObject.name, new[] { typeof(MeshRenderer), typeof(MeshFilter), typeof(PolygonCollider2D), typeof(Rigidbody2D) });
         mesh = trail.GetComponent<MeshFilter>().mesh = new Mesh();
         trail.renderer.material = trailMaterial;
  
@@ -75,6 +76,9 @@ public class TrailRendererWith2DCollider : MonoBehaviour {
         collider = trail.GetComponent<PolygonCollider2D>();
         collider.isTrigger = colliderIsTrigger;
         collider.SetPath(0, null);
+        Rigidbody2D rigi2d = trail.GetComponent<Rigidbody2D>();
+        rigi2d.gravityScale = 0f;
+        rigi2d.isKinematic = RigibodyIsKinematic;
  
         //get the transform of the object this script is attatched to
         trans = base.transform;
