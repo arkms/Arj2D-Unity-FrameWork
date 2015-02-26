@@ -98,6 +98,22 @@ namespace Arj2D
             }
             return tmp;
         }
+        /// <summary>
+        /// Try to get a component, if the gameobject dont have that component, add it
+        /// </summary>
+        /// <typeparam name="T">Component</typeparam>
+        /// <param name="_gameObject">Self GameObject</param>
+        /// <param name="_component">Component</param>
+        /// <returns>the component or new component</returns>
+        public static T GetOrAddComponent<T>(this GameObject _gameObject) where T : Component
+        {
+            T component = _gameObject.GetComponent<T>();
+            if (component == null)
+            {
+                component = _gameObject.AddComponent<T>();
+            }
+            return component;
+        }
         #endregion
 
         #region TEXTURE2D

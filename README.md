@@ -6,7 +6,7 @@ My english is not perfect,i try to do my best, please help me to improve the doc
 
 Information:
 -----
-Unity 2D FrameWork Version 0.8.8
+Unity 2D FrameWork Version 0.9.0.3
 
 A free Unity 2D FrameWork that extend and bring more utilities for work in 2D in Unity.
 Suggestions and any questions are welcome, leave it issues.
@@ -40,13 +40,17 @@ Suggestions and any questions are welcome, leave it issues.
     - TimeOwn.cs: A timer that works independet of Time.time,, include his TimeOwn.delta,,, only init when you need it.
 
 * Shaders:
-  - Sprite_Shadow: Sprite Shader that can cast and recive Shadows
   - SpriteShader: Shader for quads and planes show a texture like Sprite
   
 * Utility (Scripts that you only need to add to a GameObject and done):
+  - Effects:
+    - Sprite_ColorPulse.cs: Make a Sprite change between two colors, like blink.
+    - Trans_TweenMove.cs: Make GameObject move from A to B in loop.
   - CameraResize.cs: Preseverse aspect ratio of you game.
+  - DebugCollider2D.cs: Script that show all triggers and collider of gameobject for a fastdebug
   - DontGoThroughThings.cs: A Script that helps rigibody dont through other colliders (BETA).
   - PointForceComponent.cs: A simulator of object with atraction force.
+  - TextureTillingController.cs: A script that make a Quad or Plane have tiling and can uptade when scale it.
   - TrailRenderWith2DCollider: The name say everthing. You only need add this script to one GameObject.
   - WindComponent.cs: Create a Wind zone for Physics2D.
   
