@@ -13,7 +13,13 @@ public class AudioManager : MonoBehaviour
     
     private static AudioSource Sound;
     private static AudioSource Background;
+    /// <summary>
+    /// Key for save sound or fx with PlayerPrefs
+    /// </summary>
     public const string K_sound = "k_sound_fx";
+    /// <summary>
+    /// Key for save music or background with PlayerPrefs
+    /// </summary>
     public const string K_music = "k_sound_back";
 
     public static void Init()
@@ -41,6 +47,7 @@ public class AudioManager : MonoBehaviour
             {
                 Background.enabled = false;
             }
+            DontDestroyOnLoad(go);
         }
     }
 

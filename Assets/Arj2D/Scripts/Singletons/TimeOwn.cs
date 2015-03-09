@@ -36,4 +36,10 @@ public class TimeOwn : MonoBehaviour
         Delta = timeNow - lastInterval;
         lastInterval = timeNow;
 	}
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+        IsInit = false;
+    }
 }
