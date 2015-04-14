@@ -17,6 +17,10 @@ namespace Arj2D
         {
             _transform.position = new Vector3(_transform.position.x, _transform.position.y, _newZ);
         }
+        public static void SetPosition(this Transform _transform, float _posX, float _posY, float _posZ=0.0f)
+        {
+            _transform.position= new Vector3(_posX, _posY, _posZ);
+        }
         public static float GetPositionX(this Transform _transform)
         {
             return _transform.position.x;
@@ -46,6 +50,22 @@ namespace Arj2D
             Vector3 temp = _transform.position;
             temp.z += _offsetZ;
             _transform.position = temp;
+        }
+        public static void Move(this Transform _transform, Vector2 _offset)
+        {
+            _transform.position = new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z);
+        }
+        public static void Move(this Transform _transform, Vector3 _offset)
+        {
+            _transform.position = new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
+        }
+        public static void Move(this Transform _transform, float _offsetX, float _offsetY)
+        {
+            _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z);
+        }
+        public static void Move(this Transform _transform, float _offsetX, float _offsetY, float _offsetZ)
+        {
+            _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
         }
         /// <summary>
         /// Flip a transform, use for Flip Sprite
