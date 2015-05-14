@@ -233,8 +233,8 @@ public class TiledMapping : EditorWindow
     {
         if (indexPrefab != -1)
         {
-            this.TileWidth = Prefabs[indexPrefab].renderer.bounds.size.x;
-            this.TileHeight = Prefabs[indexPrefab].renderer.bounds.size.y;
+            this.TileWidth = Prefabs[indexPrefab].GetComponent<Renderer>().bounds.size.x;
+            this.TileHeight = Prefabs[indexPrefab].GetComponent<Renderer>().bounds.size.y;
         }
         else
         {
@@ -353,7 +353,13 @@ public class TiledMapping : EditorWindow
             if (assetsPaths[i].StartsWith(foldertoCheck))
                 if (assetsPaths[i] != foldertoCheck)
                 {
+#if UNITY_5_0
+                    obj = AssetDatabase.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
+#else
                     obj = Resources.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
+#endif
+                    
+                    
                     if (obj != null) //check if is a prefab
                     {
                         //PrefabPreview_holder.Add(AssetPreview.GetAssetPreview(obj));

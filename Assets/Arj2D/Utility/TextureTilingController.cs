@@ -24,7 +24,7 @@ public class TextureTilingController : MonoBehaviour
         if (transform_ == null)
         {
             transform_ = base.transform;
-            renderer_ = base.renderer;
+            renderer_ = GetComponent<Renderer>();
             texture_ = renderer_.sharedMaterial.mainTexture;
         }
         #endif
@@ -43,7 +43,7 @@ public class TextureTilingController : MonoBehaviour
     void Awake()
     {
         transform_ = base.transform;
-        renderer_ = base.renderer;
+        renderer_ = GetComponent<Renderer>();
         texture_ = renderer_.sharedMaterial.mainTexture;
 
         #if AUTOUPDATE

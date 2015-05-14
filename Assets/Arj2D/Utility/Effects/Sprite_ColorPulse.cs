@@ -17,7 +17,7 @@ namespace Arj2D
 
         void Awake()
         {
-            sr = GetComponent<SpriteRenderer>();
+            sr = this.GetComponent<SpriteRenderer>();
             DefaultColor = sr.color;
         }
 

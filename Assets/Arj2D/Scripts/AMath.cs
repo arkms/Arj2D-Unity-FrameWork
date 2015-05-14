@@ -187,7 +187,7 @@ namespace Arj2D
         /// <param name="_go">GameObject with BoxCollider2D</param>
         public static void BoxColliderFit(GameObject _go)
         {
-            if (!(_go.collider2D is BoxCollider2D))
+            if (!(_go.GetComponent<Collider2D>() is BoxCollider2D))
             {
                 Debug.LogWarning("Add a BoxColldier2D first");
                 return;
@@ -198,7 +198,7 @@ namespace Arj2D
 
             for (int i = 0; i < _go.transform.childCount; ++i)
             {
-                Renderer childRenderer = _go.transform.GetChild(i).renderer;
+                Renderer childRenderer = _go.transform.GetChild(i).GetComponent<Renderer>();
                 if (childRenderer != null)
                 {
                     if (FirstBound)
@@ -213,8 +213,13 @@ namespace Arj2D
                 }
             }
 
-            BoxCollider2D collider = (BoxCollider2D)_go.collider2D;
+            BoxCollider2D collider = (BoxCollider2D)_go.GetComponent<Collider2D>();
+#if UNITY_5_0
+            collider.offset = bounds.center - _go.transform.position;
+#else
             collider.center = bounds.center - _go.transform.position;
+#endif
+
             collider.size = bounds.size;
         }
 

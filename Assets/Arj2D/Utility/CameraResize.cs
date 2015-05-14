@@ -23,7 +23,7 @@ namespace Arj2D
         {
             if (ForceAspect)
             {
-                this.camera.aspect = DesignAspectWidth / DesignAspectHeight;
+                this.GetComponent<Camera>().aspect = DesignAspectWidth / DesignAspectHeight;
             }
             else
             {
@@ -44,27 +44,27 @@ namespace Arj2D
 
             if (scaleheight < 1.0f) //portrait
             {
-                Rect rect = camera.rect;
+                Rect rect = GetComponent<Camera>().rect;
 
                 rect.width = 1.0f;
                 rect.height = scaleheight;
                 rect.x = 0;
                 rect.y = (1.0f - scaleheight) / 2.0f;
 
-                camera.rect = rect;
+                GetComponent<Camera>().rect = rect;
             }
             else //lanscape
             {
                 float scalewidth = 1.0f / scaleheight;
 
-                Rect rect = camera.rect;
+                Rect rect = GetComponent<Camera>().rect;
 
                 rect.width = scalewidth;
                 rect.height = 1.0f;
                 rect.x = (1.0f - scalewidth) / 2.0f;
                 rect.y = 0;
 
-                camera.rect = rect;
+                GetComponent<Camera>().rect = rect;
             }
 
             //Create background in black

@@ -11,7 +11,7 @@ namespace Arj2D
             GameObject go = Selection.activeGameObject;
             if (go)
             {
-                Texture text = go.renderer.sharedMaterial.mainTexture;
+                Texture text = go.GetComponent<Renderer>().sharedMaterial.mainTexture;
                 if (text)
                 {
                     go.transform.localScale = new Vector3(text.width / 100f, text.height / 100f, 1f);

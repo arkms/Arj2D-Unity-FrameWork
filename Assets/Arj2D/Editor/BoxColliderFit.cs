@@ -9,7 +9,7 @@ namespace Arj2D
         public static void BoxCollider_Fit()
         {
             GameObject go = Selection.activeGameObject;
-            if (!(go.collider2D is BoxCollider2D))
+            if (!(go.GetComponent<Collider2D>() is BoxCollider2D))
             {
                 Debug.LogWarning("Add a BoxColldier2D first");
                 return;
@@ -20,7 +20,7 @@ namespace Arj2D
 
             for (int i = 0; i < go.transform.childCount; ++i)
             {
-                Renderer childRenderer = go.transform.GetChild(i).renderer;
+                Renderer childRenderer = go.transform.GetChild(i).GetComponent<Renderer>();
                 if (childRenderer != null)
                 {
                     if (FirstBound)
@@ -35,8 +35,8 @@ namespace Arj2D
                 }
             }
 
-            BoxCollider2D collider = (BoxCollider2D)go.collider2D;
-            collider.center = bounds.center - go.transform.position;
+            BoxCollider2D collider = (BoxCollider2D)go.GetComponent<Collider2D>();
+            collider.offset = bounds.center - go.transform.position;
             collider.size = bounds.size;
         }
     }

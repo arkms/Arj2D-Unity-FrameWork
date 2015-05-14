@@ -17,6 +17,7 @@ Suggestions and any questions are welcome, leave it issues.
   - Arj2Debug.cs: Can give in editor real position, rotation of GameObject when is not the father or center of GameObject.
   - Atlas2Prefab.cs: A Texture2D set in MultipleSprite, convert all Sprite in prefabs.
   - ChangeSpriteMaterial.cs: Change all material in all SpriteRender in GameObject and childrens.
+  - DisableAutoMipMaps.cs: Set default to false in mipmap in all new sprites/texures.
   - Force2DSound.cs: Force all new sound in project be in 2D.
   - QuadToSpriteSize: Can rezise a select GameObject (Sprite or Quad) to fill all screen of the main camera in orto or perspective mode.
   - SpriteOrder.cs: EditorWindow that help to manager all SpriteOrder (sortingLayerID and sortingOrder) of all SpriteRender in Scene.
@@ -31,7 +32,8 @@ Suggestions and any questions are welcome, leave it issues.
 * Scripts:
   - Amath.cs: Functions for work in 2D, like convert Vector3 to Vector2, get directions, distances, flip one sprite, etc.
   - Arj2drandom.cs: Get Random color, positions or probability like a coin and other things.
-  - BlowFish.cs (include PlayerPrefsX): Save and load with Encryption. (BETA).
+  - BlowFish.cs (include PlayerPrefsX): Save and load with Encryption.
+  - MersenneTwister.cs: A Algoritm for better random,, can use in procedural content.
   - MonoBehaviour2D.cs: Monobehaviour optimized for 2D in Unity, with this you don't need cache Componets.
   - UnityEngineExtension.cs: Add Functions to Transform, GameObejct, Texture2D, Vector3, Render and SpriteRender.
   - Singleton(Folder)

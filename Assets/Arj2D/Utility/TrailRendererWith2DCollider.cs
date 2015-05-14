@@ -45,7 +45,7 @@ namespace Arj2D
         public void ChangeTrailMaterial(Material material)
         {
             trailMaterial = material;
-            collider.renderer.material = material;
+            collider.GetComponent<Renderer>().material = material;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Arj2D
             //create an object and mesh for the trail
             GameObject trail = new GameObject("Trail_" + gameObject.name, new[] { typeof(MeshRenderer), typeof(MeshFilter), typeof(PolygonCollider2D), typeof(Rigidbody2D) });
             mesh = trail.GetComponent<MeshFilter>().mesh = new Mesh();
-            trail.renderer.material = trailMaterial;
+            trail.GetComponent<Renderer>().material = trailMaterial;
 
             //get and set the polygon collider on this trail.
             collider = trail.GetComponent<PolygonCollider2D>();

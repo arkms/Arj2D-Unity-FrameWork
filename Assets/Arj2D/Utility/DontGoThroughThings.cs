@@ -24,9 +24,9 @@ namespace Arj2D
         //initialize values 
         void Awake()
         {
-            myRigidbody = base.rigidbody2D;
+            myRigidbody = this.GetComponent<Rigidbody2D>();
             previousPosition = myRigidbody.position;
-            minimumExtent = Mathf.Min(Mathf.Min(collider.bounds.extents.x, collider.bounds.extents.y), collider.bounds.extents.z);
+            minimumExtent = Mathf.Min(Mathf.Min(GetComponent<Collider>().bounds.extents.x, GetComponent<Collider>().bounds.extents.y), GetComponent<Collider>().bounds.extents.z);
             partialExtent = minimumExtent * (1.0f - skinWidth);
             sqrMinimumExtent = minimumExtent * minimumExtent;
         }
