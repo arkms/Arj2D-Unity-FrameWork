@@ -36,7 +36,11 @@ namespace Arj2D
             }
 
             BoxCollider2D collider = (BoxCollider2D)go.GetComponent<Collider2D>();
+#if UNITY_5_0
             collider.offset = bounds.center - go.transform.position;
+#else
+            collider.center = bounds.center - go.transform.position;
+#endif
             collider.size = bounds.size;
         }
     }
