@@ -292,9 +292,10 @@ public class TiledMapping : EditorWindow
     {
         Vector2 TiledPos = GetTilePositionFromMouseLocation();
         Vector3 pos = new Vector3(TiledPos.x * this.TileWidth, TiledPos.y * this.TileHeight, 0);
-        return (pos.x > 0) &&
+        //Debug.Log(TiledPos + " - " + pos);
+        return (pos.x >= 0) &&
             (pos.x < (this.Columns * this.TileWidth)) &&
-            (pos.y > 0) &&
+            (pos.y >= 0) &&
             (pos.y < (this.Rows * this.TileHeight));
     }
 
@@ -307,15 +308,14 @@ public class TiledMapping : EditorWindow
         {
             if (obj.transform.root == Father.transform)
             {
+                //We destroy object in that position
                 Undo.DestroyObjectImmediate(obj);
             }
             else //its not of the tiled map
             {
                 return;
             }
-
         }
-
         //create one
         GameObject go = Instantiate(Prefabs[indexPrefab], new Vector3(MouseInTiled.x, MouseInTiled.y, this.Depth), Prefabs[indexPrefab].transform.rotation) as GameObject;
 
