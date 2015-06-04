@@ -4,6 +4,9 @@ namespace Arj2D
 {
     public static class AMath
     {
+        public const float PI2 = Mathf.PI * 2f;
+        public const float TAU = Mathf.PI * 2f;
+
         /// <summary>
         /// Calculate the distance between two vector3, ignoring the Z
         /// </summary>
@@ -120,6 +123,66 @@ namespace Arj2D
         }
 
         /// <summary>
+        /// Get in RAD the angle from a transform with direction to a point in word, can be from -Pi to PI (-180° to 180). Taking transform.right how forward
+        /// </summary>
+        /// <param name="_direction">Transform of object we want know the angles between his forward and destiny</param>
+        /// <param name="_destiny">Object look at</param>
+        /// <returns>Angle in RAD</returns>
+        public static float Angle_Relative(Transform _direction, Transform _destiny)
+        {
+            Vector3 ObjDirection = _destiny.position - _direction.position;
+            ObjDirection.Normalize();
+
+            return Vector3.Cross(_direction.right, ObjDirection).z;
+        }
+
+        /// <summary>
+        /// Get in RAD the angle from a transform with direction to a point in word, can be from -Pi to PI (-180° to 180).
+        /// </summary>
+        /// <param name="_direction">Transform of object we want know the angles between his forward and destiny</param>
+        /// <param name="_destiny">Object look at</param>
+        /// <param name="_forward">Forward of your GameObject, use if is not transform.right</param>
+        /// <returns>Angle in RAD</returns>
+        public static float Angle_Relative(Transform _direction, Transform _destiny, Vector3 _forward)
+        {
+            Vector3 ObjDirection = _destiny.position - _direction.position;
+            ObjDirection.Normalize();
+
+            return Vector3.Cross(_forward, ObjDirection).z;
+        }
+
+        /// <summary>
+        /// Get in RAD the angle from a transform with direction to a point in word, but only get the angle always positive. Taking transform.right how forward
+        /// </summary>
+        /// <param name="_direction">Transform of object we want know the angles between his forward and destiny</param>
+        /// <param name="_destiny">Object look at</param>
+        /// <returns>Angle in RAD always positive</returns>
+        public static float Angle_RelativeAbs(Transform _direction, Transform _destiny)
+        {
+            Vector3 ObjDirection = _destiny.position - _direction.position;
+            ObjDirection.Normalize();
+
+            float dot = Vector3.Dot(ObjDirection, _direction.right);
+            return Mathf.Acos(dot);
+        }
+
+        /// <summary>
+        /// Get in RAD the angle from a transform with direction to a point in word, but only get the angle always positive.
+        /// </summary>
+        /// <param name="_direction">Transform of object we want know the angles between his forward and destiny</param>
+        /// <param name="_destiny">Object look at</param>
+        /// <param name="_forward">Forward of your GameObject, use if is not transform.right</param>
+        /// <returns>Angle in RAD always positive</returns>
+        public static float Angle_RelativeAbs(Transform _direction, Transform _destiny, Vector3 _forward)
+        {
+            Vector3 ObjDirection = _destiny.position - _direction.position;
+            ObjDirection.Normalize();
+
+            float dot = Vector3.Dot(ObjDirection, _forward);
+            return Mathf.Acos(dot);
+        }
+
+        /// <summary>
         /// Add line (Enter) every number of char in one string
         /// </summary>
         /// <param name="_text">String to fix</param>
@@ -138,16 +201,29 @@ namespace Arj2D
         }
 
         /// <summary>
+        /// Neutralizes the an angle in Grad
+        /// </summary>
+        /// <returns>The neutralized angle.</returns>
+        /// <param name="angle">The source angle.</param>
+        public static float NeutralizeAngleInGrad(float _angle)
+        {
+            if (_angle < 0.0f)
+                return (_angle % 360.0f) * -1;
+            else
+                return _angle % 360.0f;
+        }
+
+        /// <summary>
         /// Neutralizes the an angle.
         /// </summary>
         /// <returns>The neutralized angle.</returns>
         /// <param name="angle">The source angle.</param>
         public static float NeutralizeAngle(float _angle)
         {
-            if (_angle < 0)
-                return (_angle % 360.0f) * -1;
+            if (_angle < 0.0f)
+                return (_angle % PI2) * -1;
             else
-                return _angle % 360.0f;
+                return _angle % PI2;
         }
 
         /// <summary>
