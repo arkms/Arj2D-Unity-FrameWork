@@ -227,6 +227,57 @@ namespace Arj2D
         }
 
         /// <summary>
+        /// A Lerp function but for Vector3
+        /// </summary>
+        /// <param name="_start">Start position</param>
+        /// <param name="_end">End position</param>
+        /// <param name="_percent">Percent, value between 0 - 1</param>
+        /// <returns></returns>
+        public static Vector3 LerpV3(Vector3 _start, Vector3 _end, float _percent)
+        {
+            return (_start + _percent*(_end - _start));
+        }
+
+        /// <summary>
+        /// This is similar to Lerp, but travels the torque-minimal path. which means it travels along the straightest path the rounded surface of a sphere
+        /// </summary>
+        /// <param name="start">Start Position</param>
+        /// <param name="end">End Position</param>
+        /// <param name="percent">Percent, value between 0 - 1</param>
+        /// <returns>Vector3 result of Slerp</returns>
+        public static Vector3 Slerp(Vector3 _start, Vector3 _end, float _percent)
+        {
+            //Taked from https://keithmaggio.wordpress.com/2011/02/15/math-magician-lerp-slerp-and-nlerp/#more-506
+            // Dot product - the cosine of the angle between 2 vectors.
+            float dot = Vector3.Dot(_start, _end);
+            // Clamp it to be in the range of Acos()
+            // This may be unnecessary, but floating point
+            // precision can be a fickle mistress.
+            Mathf.Clamp(dot, -1.0f, 1.0f);
+            // Acos(dot) returns the angle between start and end,
+            // And multiplying that by percent returns the angle between
+            // start and the final result.
+            float theta = Mathf.Acos(dot) * _percent;
+            Vector3 RelativeVec = _end - _start * dot;
+            RelativeVec.Normalize();     // Orthonormal basis
+            // The final result.
+            return ((_start * Mathf.Cos(theta)) + (RelativeVec * Mathf.Sin(theta)));
+        }
+
+        /// <summary>
+        /// Faster option to Slerp, but little less accurate. Does not maintain a constant velocity.
+        /// </summary>
+        /// <param name="_start">Start position</param>
+        /// <param name="_end">End position</param>
+        /// <param name="_percent">Percent, value between 0 - 1</param>
+        /// <returns></returns>
+        public static Vector3 Nlerp(Vector3 _start, Vector3 _end, float _percent)
+        {
+            //Taked from https://keithmaggio.wordpress.com/2011/02/15/math-magician-lerp-slerp-and-nlerp/#more-506
+            return LerpV3(_start, _end, _percent).normalized;
+        }
+
+        /// <summary>
         /// Calculates the CIE76 delta-e value: http://en.wikipedia.org/wiki/Color_difference#CIE76
         /// </summary>
         /// <param name="_colorA">Color A</param>
@@ -293,7 +344,7 @@ namespace Arj2D
 #if UNITY_5_0
             collider.offset = bounds.center - _go.transform.position;
 #else
-            collider.center = bounds.center - _go.transform.position;
+            collider.offset = bounds.center - _go.transform.position;
 #endif
 
             collider.size = bounds.size;

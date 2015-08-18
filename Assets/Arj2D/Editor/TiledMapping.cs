@@ -356,7 +356,7 @@ public class TiledMapping : EditorWindow
 #if UNITY_5_0
                     obj = AssetDatabase.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
 #else
-                    obj = Resources.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
+                    obj = AssetDatabase.LoadAssetAtPath((string)assetsPaths[i], typeof(GameObject));
 #endif
                     
                     

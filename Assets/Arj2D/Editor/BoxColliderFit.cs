@@ -39,7 +39,7 @@ namespace Arj2D
 #if UNITY_5_0
             collider.offset = bounds.center - go.transform.position;
 #else
-            collider.center = bounds.center - go.transform.position;
+            collider.offset = bounds.center - go.transform.position;
 #endif
             collider.size = bounds.size;
         }

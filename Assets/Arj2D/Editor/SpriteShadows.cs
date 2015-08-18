@@ -40,7 +40,9 @@ namespace Arj2D
                 GUILayout.Label(re[i].gameObject.name, GUILayout.MinWidth(80f), GUILayout.MaxWidth(80f));
                 GUILayout.Label(Preview[i], GUILayout.MaxWidth(35f), GUILayout.MaxHeight(35f));
                 GUILayout.Space(20f);
+#pragma warning disable 0618
                 re[i].castShadows = GUILayout.Toggle(re[i].castShadows, "Cast", GUILayout.MaxWidth(50f));
+#pragma warning restore 0618
                 re[i].receiveShadows = GUILayout.Toggle(re[i].receiveShadows, "receive", GUILayout.MaxWidth(60f));
                 EditorGUILayout.EndHorizontal();
             }
