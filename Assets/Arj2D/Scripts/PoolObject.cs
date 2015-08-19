@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace ARJ2D
+namespace Arj2D
 {
     public class PoolObject
     {
