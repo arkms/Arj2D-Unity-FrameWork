@@ -10,12 +10,23 @@ namespace Arj2D
         /// <summary>
         /// Calculate the distance between two vector3, ignoring the Z
         /// </summary>
-        /// <param name="_vA"></param>
-        /// <param name="_vB"></param>
-        /// <returns></returns>
-        public static float Distance(Vector3 _vA, Vector3 _vB)
+        /// <param name="_vA">Posistion of GameObjec1</param>
+        /// <param name="_vB">Posistion of GameObjec1</param>
+        /// <returns>distance in 2D</returns>
+        public static float Distance2D(Vector3 _vA, Vector3 _vB)
         {
             return (DistanceX(_vA, _vB) + DistanceY(_vA, _vB));
+        }
+
+        /// <summary>
+        /// Calculate the distance between two vector3, ignoring the Z
+        /// </summary>
+        /// <param name="_vA">Transform of Gameobjec1</param>
+        /// <param name="_vB">Transform of Gameobjec2</param>
+        /// <returns>Distance in 2D</returns>
+        public static float Distance2D(Transform _vA, Transform _vB)
+        {
+            return (DistanceX(_vA.position, _vB.position) + DistanceY(_vA.position, _vB.position));
         }
 
         public static float DistanceX(Vector3 _vA, Vector3 _vB)
@@ -38,28 +49,73 @@ namespace Arj2D
             return Mathf.Abs(_vA.x - _vB.x);
         }
 
+        public static float DistanceX(Transform _vA, Transform _vB)
+        {
+            return Mathf.Abs(_vA.position.x - _vB.position.x);
+        }
+
         public static float DistanceY(Vector3 _vA, Vector3 _vB)
         {
             return Mathf.Abs(_vA.y - _vB.y);
         }
 
+        public static float DistanceY(Vector2 _vA, Vector2 _vB)
+        {
+            return Mathf.Abs(_vA.y - _vB.y);
+        }
+
+        public static float DistanceY(Vector3 _vA, Vector2 _vB)
+        {
+            return Mathf.Abs(_vA.y - _vB.y);
+        }
+
+        public static float DistanceY(Vector2 _vA, Vector3 _vB)
+        {
+            return Mathf.Abs(_vA.y - _vB.y);
+        }
+
+        public static float DistanceY(Transform _vA, Transform _vB)
+        {
+            return Mathf.Abs(_vA.position.y - _vB.position.y);
+        }
+
+        /// <summary>
+        /// Angle to Vector2
+        /// </summary>
+        /// <param name="_angle"></param>
+        /// <returns>Direction of Angle</returns>
         public static Vector2 AngleToV2(float _angle)
         {
             _angle *= Mathf.Deg2Rad;
             return new Vector2(Mathf.Cos(_angle), Mathf.Sin(_angle));
         }
 
-        public static Vector2 AngleToV2r(float _angle)
+        /// <summary>
+        /// Angle in RAD to Vector2
+        /// </summary>
+        /// <param name="_angle">Angle in RAD</param>
+        /// <returns>Direction of Angle</returns>
+        public static Vector2 AngleRadToV2(float _angle)
         {
             return new Vector2(Mathf.Cos(_angle), Mathf.Sin(_angle));
         }
 
+        /// <summary>
+        /// Angle to Vector2
+        /// </summary>
+        /// <param name="_angle">Angle</param>
+        /// <returns>Direction of Angle</returns>
         public static Vector2 AngleToV2(int _angle)
         {
             float angle = _angle * Mathf.Deg2Rad;
             return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         }
 
+        /// <summary>
+        /// Direction in Vector2 to Angle
+        /// </summary>
+        /// <param name="_v2">Direction</param>
+        /// <returns>Angle</returns>
         public static float V2ToAngle(Vector2 _v2)
         {
             return Mathf.Atan2(_v2.y, _v2.x);
@@ -76,6 +132,21 @@ namespace Arj2D
             if (_origin.x < _destiny.x)
                 return 1;
             else if (_origin.x > _destiny.x)
+                return -1;
+            return 0;
+        }
+
+        /// <summary>
+        /// Get the direction you need in X from origin to destiny
+        /// </summary>
+        /// <param name="_origin"></param>
+        /// <param name="_destiny"></param>
+        /// <returns></returns>
+        public static int DirectionX(Transform _origin, Transform _destiny)
+        {
+            if (_origin.position.x < _destiny.position.x)
+                return 1;
+            else if (_origin.position.x > _destiny.position.x)
                 return -1;
             return 0;
         }
@@ -110,16 +181,54 @@ namespace Arj2D
             return 0;
         }
 
+        /// <summary>
+        /// Get the direction you need in Y from origin to destiny
+        /// </summary>
+        /// <param name="_origin"></param>
+        /// <param name="_destiny"></param>
+        /// <returns></returns>
+        public static int DirectionY(float _origin, float _destiny)
+        {
+            if (_origin < _destiny)
+                return 1;
+            else if (_origin > _destiny)
+                return -1;
+            return 0;
+        }
+
+        /// <summary>
+        /// Get the direction you need in Y from origin to destiny
+        /// </summary>
+        /// <param name="_origin"></param>
+        /// <param name="_destiny"></param>
+        /// <returns></returns>
+        public static int DirectionY(Transform _origin, Transform _destiny)
+        {
+            if (_origin.position.y < _destiny.position.y)
+                return 1;
+            else if (_origin.position.y > _destiny.position.y)
+                return -1;
+            return 0;
+        }
+
         public static Vector3 Direction(Vector3 _origin, Vector3 _destiny)
         {
-            // return new Vector3(DirX(_origin, _destiny), DirY(_origin, _destiny));
             return new Vector3((_destiny.x - _origin.x), (_destiny.y - _origin.y)).normalized;
+        }
+
+        public static Vector3 Direction(Transform _origin, Transform _destiny)
+        {
+            return new Vector3((_destiny.position.x - _origin.position.x), (_destiny.position.y - _origin.position.y)).normalized;
         }
 
         public static Vector2 DirectionV2(Vector3 _origin, Vector3 _destiny)
         {
-            //return new Vector2(DirX(_origin, _destiny), DirY(_origin, _destiny));
             return new Vector2((_destiny.x - _origin.x), (_destiny.y - _origin.y)).normalized;
+        }
+
+        public static Vector2 DirectionV2(Transform _origin, Transform _destiny)
+        {
+            return new Vector2((_destiny.position.x - _origin.position.x), (_destiny.position.y - _origin.position.y)).normalized;
         }
 
         /// <summary>
