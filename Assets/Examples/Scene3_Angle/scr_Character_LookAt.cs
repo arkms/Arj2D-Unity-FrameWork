@@ -16,6 +16,7 @@ public class scr_Character_LookAt : MonoBehaviour2D
     void OnGUI()
     {
         GUILayout.Label("Move the 'Destiny to see' GameObject in Editor");
-        GUILayout.Label("The angle between Character and destiny is: " + (AMath.Angle_RelativeAbs(transform, Destiny_ToLookAt) * Mathf.Rad2Deg).ToString("000.0"));
+        GUILayout.Label("Theangle between Character and destiny is: " + (AMath.Angle_RelativeAbs(transform, Destiny_ToLookAt) * Mathf.Rad2Deg).ToString("000.0"));
+        GUILayout.Label("In Background change color before play");
     }
 }

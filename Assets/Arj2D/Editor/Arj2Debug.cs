@@ -75,6 +75,7 @@ namespace Arj2D
             Gocam.tag = "MainCamera";
             Camera cam = Gocam.AddComponent<Camera>();
             cam.orthographic = true;
+            cam.clearFlags = CameraClearFlags.SolidColor;
             cam.farClipPlane = 50;
         }
     }

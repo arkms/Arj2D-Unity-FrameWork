@@ -425,5 +425,25 @@ namespace Arj2D
             }
             return newList;
         }
+
+        /// <summary>
+        /// Make one texture fill with one color
+        /// </summary>
+        /// <param name="_width">Width of texture</param>
+        /// <param name="_height">Height of texture</param>
+        /// <param name="_color">Color to fill all texture</param>
+        /// <returns>Final texture</returns>
+        public static Texture2D MakeTextureOneColor(int _width, int _height, Color _color)
+        {
+            Color[] pix = new Color[_width * _height];
+
+            for (int i = 0; i < pix.Length; i++)
+                pix[i] = _color;
+
+            Texture2D result = new Texture2D(_width, _height);
+            result.SetPixels(pix);
+            result.Apply();
+            return result;
+        }
     }
 }
