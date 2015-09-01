@@ -143,6 +143,41 @@ namespace Arj2D
             }
             return component;
         }
+
+        /// <summary>
+        /// Find the first GameObject with a name,, starting in a father and search in each children of children until first GameObject with the name
+        /// </summary>
+        /// <param name="_gameObject">GameObject where start</param>
+        /// <param name="name">Name of GameObject to find</param>
+        /// <returns>GameObject with the name, searching</returns>
+        public static GameObject FindGameObjectByNameRecursive(this GameObject _gameObject, string name)
+        {
+            if (_gameObject.name == name)
+            {
+                return _gameObject;
+            }
+            //first find it in children
+            Transform found = _gameObject.transform.Find(name);
+            if (found != null)
+            {
+                return found.gameObject;
+            }
+
+            //if not, find it inside each child
+            int children = _gameObject.transform.childCount;
+            for (int i = 0; i < children; ++i)
+            {
+                GameObject go = FindGameObjectByNameRecursive(_gameObject.transform.GetChild(i).gameObject, name);
+                if (go != null)
+                {
+                    return go;
+                }
+            }
+
+            return null;
+        }
+
+
         #endregion
 
         #region TEXTURE2D
