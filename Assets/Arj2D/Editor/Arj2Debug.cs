@@ -35,10 +35,10 @@ namespace Arj2D
                     MeshRenderer mr = go.GetComponent<MeshRenderer>();
                     if (mr != null)
                     {
-#if UNITY_5_1
+#if UNITY_5_1 || UNITY_5_2
                         mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 #else
-                        mr.castShadows = false;
+                        mr.shadowCastingMode = false;
 #endif
                         mr.receiveShadows = false;
                     }
@@ -65,18 +65,6 @@ namespace Arj2D
                 else
                     Debug.Log("ZERO");
             }
-        }
-
-        [MenuItem("Arj2D/GameObject/Camera2D")]
-        public static void Camera2D()
-        {
-            GameObject Gocam = new GameObject("Camera2D");
-            Gocam.transform.position = new Vector3(0f, 0f, -10f);
-            Gocam.tag = "MainCamera";
-            Camera cam = Gocam.AddComponent<Camera>();
-            cam.orthographic = true;
-            cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.farClipPlane = 50;
         }
     }
 }

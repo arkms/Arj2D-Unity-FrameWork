@@ -19,7 +19,7 @@ public class PoolManager : MonoBehaviour
     private static Transform transform_; //father transform
 
     /// <summary>
-    /// Add Prefab to PoolManager, in secure modo, that if the prefab already is in poolmanager, dont create other one
+    /// Add Prefab to PoolManager, in secure mode, that if the prefab already is in poolmanager, dont create other one
     /// </summary>
     /// <param name="_prefab">Prefab</param>
     /// <param name="_size">Inicial number of prefab</param>
