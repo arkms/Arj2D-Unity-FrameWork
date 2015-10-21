@@ -170,49 +170,6 @@ public class PoolManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Destroy GameObject
-    /// </summary>
-    /// <param name="__id">ID in PoolManager</param>
-    /// <param name="_go">GameObject to destroy</param>
-    public static void Despawn(int __id, GameObject _go)
-    {
-        int goID = _go.GetInstanceID();
-        for (int i = 0; i < Pool[__id].Count; i++)
-        {
-            if (Pool[__id][i].GetInstanceID() == goID)
-            {
-                Pool[__id][i].SetActive(false);
-                return;
-            }
-        }
-    }
-
-    /// <summary>
-    /// Destroy GameObject,, recommend better use Despawn(int __id, GameObject _go)
-    /// </summary>
-    /// <param name="_go">GameObject to destroy</param>
-    public static void Despawn(GameObject _go)
-    {
-        string GameObjectName = _go.name.Remove(_go.name.IndexOf('_'));
-        int index = _go.GetInstanceID();
-        for (int i = 0; i < Pool.Count; i++)
-        {
-            if (Prefabs[i].name == GameObjectName)
-            {
-                for (int j = 0; j < Pool[i].Count; j++)
-                {
-                    if (Pool[i][j].GetInstanceID() == index)
-                    {
-                        Pool[i][j].SetActive(false);
-                        return;
-                    }
-                }
-                Debug.LogWarning("That prefab is not in PoolManager");
-            }
-        }
-    }
-
-    /// <summary>
     /// Get ID of Prefab of GameObject in Prefab,, caution use Prefabs with exactly same name
     /// </summary>
     /// <param name="_go">GameObject to try get prefab</param>

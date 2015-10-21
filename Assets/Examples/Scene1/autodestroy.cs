@@ -16,7 +16,7 @@ public class autodestroy : MonoBehaviour2D
     {
         if (!spriteRender.IsVisibleInCamera(Camera.main))
         {
-            PoolManager.Despawn(IDinPool, gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

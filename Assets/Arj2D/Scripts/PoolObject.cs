@@ -90,23 +90,6 @@ namespace Arj2D
         }
 
         /// <summary>
-        /// Despawn GameObject in pool
-        /// </summary>
-        /// <param name="_gameobject">GameObject to despawn</param>
-        public void Destroy(GameObject _gameobject)
-        {
-            int ID = _gameobject.GetInstanceID();
-
-            for (int i = 0; i < Pool.Count; i++)
-            {
-                if (Pool[i].GetInstanceID() == ID)
-                {
-                    Pool[i].SetActive(false);
-                }
-            }
-        }
-
-        /// <summary>
         /// Set if can expand or not if all gameobject in pools are in use
         /// </summary>
         /// <param name="_CanExpand">True or false</param>

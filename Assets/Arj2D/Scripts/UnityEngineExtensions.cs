@@ -7,19 +7,19 @@ namespace Arj2D
         #region TRASNFORM
         public static void SetPositionX(this Transform _transform, float _newX)
         {
-            _transform.position.SetX(_newX);
+            _transform.position = new Vector3(_newX, _transform.position.y, _transform.position.z);
         }
         public static void SetPositionY(this Transform _transform, float _newY)
         {
-            _transform.position.SetY(_newY);
+            _transform.position = new Vector3(_transform.position.x, _newY, _transform.position.z);
         }
         public static void SetPositionZ(this Transform _transform, float _newZ)
         {
-            _transform.position.SetZ(_newZ);
+            _transform.position= new Vector3(_transform.position.x, _transform.position.y, _newZ);
         }
         public static void SetPosition(this Transform _transform, float _posX, float _posY, float _posZ=0.0f)
         {
-            _transform.position.Set(_posX, _posY, _posZ);
+            _transform.position= new Vector3(_posX, _posY, _posZ);
         }
         public static float GetPositionX(this Transform _transform)
         {
@@ -35,38 +35,38 @@ namespace Arj2D
         }
         public static void ShiftPositionX(this Transform _transform, float _offsetX)
         {
-            _transform.position.SetX(_transform.position.x + _offsetX);
+            _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y, _transform.position.z);
         }
         public static void ShiftPositionY(this Transform _transform, float _offsetY)
         {
-            _transform.position.SetY(_transform.position.y + _offsetY);
+            _transform.position= new Vector3(0f, _transform.position.y + _offsetY, 0f);
         }
         public static void ShiftPositionZ(this Transform _transform, float _offsetZ)
         {
-            _transform.position.SetZ(_transform.position.z + _offsetZ);
+            _transform.position= new Vector3(0f, 0f, _transform.position.z + _offsetZ);
         }
         public static void Move(this Transform _transform, Vector2 _offset)
         {
-            _transform.position.Set(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z);
+            _transform.position= new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z);
         }
         public static void Move(this Transform _transform, Vector3 _offset)
         {
-            _transform.position.Set(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
+            _transform.position= new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
         }
         public static void Move(this Transform _transform, float _offsetX, float _offsetY)
         {
-            _transform.position.Set(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z);
+            _transform.position= new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z);
         }
         public static void Move(this Transform _transform, float _offsetX, float _offsetY, float _offsetZ)
         {
-            _transform.position.Set(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
+            _transform.position= new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
         }
         /// <summary>
         /// Flip a transform, use for Flip Sprite
         /// </summary>
         public static void Flip(this Transform _transform)
         {
-            _transform.localScale.SetX(_transform.localScale.x * -1f);
+            _transform.localScale = new Vector3(_transform.localScale.x * -1f, _transform.localScale.y, _transform.localScale.z);
         }
         /// <summary>
         /// Flip a transform, use for Flip Sprite

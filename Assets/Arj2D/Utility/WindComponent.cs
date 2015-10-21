@@ -13,6 +13,8 @@ namespace Arj2D
         // 3. Add this WindComponent to the empty object.
         // Note: Only works on game objects that have the Rigid Body 2D and Collider 2D components
 
+        //NOTE THiS is discontinued beacause Unity 5 has Point Effector now
+
         // Directional force applied to objects that enter this object's Collider 2D boundaries
         public Vector2 Force = Vector2.zero;
         // Internal list that tracks objects that enter this object's "zone"

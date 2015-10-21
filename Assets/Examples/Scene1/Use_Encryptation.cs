@@ -30,5 +30,6 @@ public class Use_Encryptation : MonoBehaviour
     void OnGUI()
     {
         GUILayout.Label("Press 'S' to sava Value, 'L' for load and 'R' for delete key");
+        GUILayout.Label("Scale the background and see autotiled in action");
     }
 }
