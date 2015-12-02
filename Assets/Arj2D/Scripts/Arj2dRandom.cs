@@ -96,5 +96,23 @@ namespace Arj2D
         {
             return (Random.Range(0, 2) == 1) ? 1f : -1f;
         }
+
+        /// <summary>
+        /// Shuffle a list (BETA)
+        /// </summary>
+        /// <typeparam name="T">Type of list</typeparam>
+        /// <param name="_list">Original list</param>
+        /// <returns>New list suffle<</returns>
+        public static System.Collections.Generic.List<T> ShuffleList<T>(System.Collections.Generic.List<T> _list)
+        {
+            System.Collections.Generic.List<T> newList = new System.Collections.Generic.List<T>();
+            while (_list.Count > 0)
+            {
+                int index = Random.Range(0, _list.Count);
+                newList.Add(_list[index]);
+                _list.RemoveAt(index);
+            }
+            return newList;
+        }
     }
 }

@@ -127,13 +127,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionX(Vector3 _origin, Vector3 _destiny)
+        public static float DirectionX(Vector3 _origin, Vector3 _destiny)
         {
             if (_origin.x < _destiny.x)
-                return 1;
+                return 1f;
             else if (_origin.x > _destiny.x)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         /// <summary>
@@ -142,13 +142,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionX(Transform _origin, Transform _destiny)
+        public static float DirectionX(Transform _origin, Transform _destiny)
         {
             if (_origin.position.x < _destiny.position.x)
-                return 1;
+                return 1f;
             else if (_origin.position.x > _destiny.position.x)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         /// <summary>
@@ -157,13 +157,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionX(float _origin, float _destiny)
+        public static float DirectionX(float _origin, float _destiny)
         {
             if (_origin < _destiny)
-                return 1;
+                return 1f;
             else if (_origin > _destiny)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         /// <summary>
@@ -172,13 +172,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionY(Vector3 _origin, Vector3 _destiny)
+        public static float DirectionY(Vector3 _origin, Vector3 _destiny)
         {
             if (_origin.y < _destiny.y)
-                return 1;
+                return 1f;
             else if (_origin.y > _destiny.y)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         /// <summary>
@@ -187,13 +187,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionY(float _origin, float _destiny)
+        public static float DirectionY(float _origin, float _destiny)
         {
             if (_origin < _destiny)
-                return 1;
+                return 1f;
             else if (_origin > _destiny)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         /// <summary>
@@ -202,13 +202,13 @@ namespace Arj2D
         /// <param name="_origin"></param>
         /// <param name="_destiny"></param>
         /// <returns></returns>
-        public static int DirectionY(Transform _origin, Transform _destiny)
+        public static float DirectionY(Transform _origin, Transform _destiny)
         {
             if (_origin.position.y < _destiny.position.y)
-                return 1;
+                return 1f;
             else if (_origin.position.y > _destiny.position.y)
-                return -1;
-            return 0;
+                return -1f;
+            return 0f;
         }
 
         public static Vector3 Direction(Vector3 _origin, Vector3 _destiny)
@@ -406,24 +406,6 @@ namespace Arj2D
 #endif
 
             collider.size = bounds.size;
-        }
-
-        /// <summary>
-        /// Shuffle a list (BETA)
-        /// </summary>
-        /// <typeparam name="T">Type of list</typeparam>
-        /// <param name="_list">Original list</param>
-        /// <returns>New list suffle<</returns>
-        public static System.Collections.Generic.List<T> ShuffleList<T>(System.Collections.Generic.List<T> _list)
-        {
-            System.Collections.Generic.List<T> newList = new System.Collections.Generic.List<T>();
-            while (_list.Count > 0)
-            {
-                int index = Random.Range(0, _list.Count);
-                newList.Add(_list[index]);
-                _list.RemoveAt(index);
-            }
-            return newList;
         }
 
         /// <summary>

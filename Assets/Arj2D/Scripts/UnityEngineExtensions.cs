@@ -227,13 +227,9 @@ namespace Arj2D
         #endregion
 
         #region VECTOR2
-        public static void SetX(this Vector2 _vector2, float _x)
+        public static Vector3 ToVector3(this Vector2 _vector2)
         {
-            _vector2.x = _x;
-        }
-        public static void SetY(this Vector2 _vector2, float _y)
-        {
-            _vector2.y = _y;
+            return new Vector3(_vector2.x, _vector2.y);
         }
         #endregion
 
@@ -241,18 +237,6 @@ namespace Arj2D
         public static Vector2 ToVector2(this Vector3 _vector3)
         {
             return new Vector2(_vector3.x, _vector3.y);
-        }
-        public static void SetX(this Vector3 _vector3, float _x)
-        {
-            _vector3.x = _x;
-        }
-        public static void SetY(this Vector3 _vector3, float _y)
-        {
-            _vector3.y = _y;
-        }
-        public static void SetZ(this Vector3 _vector3, float _z)
-        {
-            _vector3.z = _z;
         }
         #endregion
 

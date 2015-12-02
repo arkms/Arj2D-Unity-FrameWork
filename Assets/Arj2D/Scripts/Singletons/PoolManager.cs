@@ -254,6 +254,21 @@ public class PoolManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Disable  all GameObject in PoolManger and realease prefab reference
+    /// </summary>
+    public static void DestroyAll()
+    {
+        for (int i = 0; i < Pool.Count; i++)
+        {
+            for (int j = 0; j < Pool[i].Count; j++)
+            {
+                Destroy(Pool[i][j]);
+                Pool[i][j] = null;
+            }
+        }
+    }
+
+    /// <summary>
     /// Get ID of Prefab In PoolManager
     /// </summary>
     /// <param name="_prefab">Prefab to find</param>

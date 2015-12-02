@@ -66,5 +66,12 @@ namespace Arj2D
                     Debug.Log("ZERO");
             }
         }
+
+        [MenuItem("Arj2D/Debug/DeleteAllSaveData")]
+        public static void DeleteAllSaveData()
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("Save data borrado");
+        }
     }
 }
