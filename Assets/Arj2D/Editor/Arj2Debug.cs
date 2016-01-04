@@ -35,11 +35,9 @@ namespace Arj2D
                     MeshRenderer mr = go.GetComponent<MeshRenderer>();
                     if (mr != null)
                     {
-#if UNITY_5_1 || UNITY_5_2
                         mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-#else
-                        mr.shadowCastingMode = false;
-#endif
+                        //Change to this line for UNITY 4.x
+                        //mr.shadowCastingMode = false;
                         mr.receiveShadows = false;
                     }
                 }

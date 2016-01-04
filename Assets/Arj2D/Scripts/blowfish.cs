@@ -59,8 +59,12 @@ using System.Collections.Generic;
 
 namespace Arj2D
 {
+
     public class BlowFish
     {
+        const string BlowFishPassword = "19AE20084RJ13RD4";  //CHANGEME  <-----------------------------------------------------------------------------------------
+
+
         #region "Global variables and constants"
 
         const int ROUNDS = 16; //standard is 16, to increase the number of rounds, bf_P needs to be equal to the number of rouds. Use digits of PI.
@@ -99,10 +103,10 @@ namespace Arj2D
         /// Constructor for hex key
         /// </summary>
         /// <param name="hexKey">Cipher key as a hex string</param>
-        public BlowFish(string hexKey= "19AE20084RJ13RD4") ////04B915BA43FEB5B6
+        public BlowFish() ////19AE20084RJ13RD4
         {
             randomSource = new RNGCryptoServiceProvider();
-            SetupKey(HexToByte(hexKey));
+            SetupKey(HexToByte(BlowFishPassword));
         }
 
         /// <summary>
@@ -945,93 +949,105 @@ namespace Arj2D
 
     public static class PlayerPreferX
     {
-        public static void SetInt(BlowFish b, string _key, int _value)
+        static BlowFish keyBlow;
+
+        static BlowFish GetKey()
         {
-            string text = b.Encrypt_CBC(_value.ToString());
-            string key = b.Encrypt_ECB(_key);
+            if (keyBlow != null)
+                return keyBlow;
+
+            keyBlow = new BlowFish();
+            return keyBlow;
+        }
+
+        public static void SetInt(string _key, int _value)
+        {
+
+            string text = GetKey().Encrypt_CBC(_value.ToString());
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static void SetIntArray(BlowFish b, string _key, int[] _value)
+        public static void SetIntArray(string _key, int[] _value)
         {
-            string text = b.Encrypt_CBC(b.Convert_Aint(_value));
-            string key = b.Encrypt_ECB(_key);
+            string text = GetKey().Encrypt_CBC(GetKey().Convert_Aint(_value));
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static void SetBool(BlowFish b, string _key, bool _value)
+        public static void SetBool(string _key, bool _value)
         {
-            string text = b.Encrypt_CBC(_value.ToString());
-            string key = b.Encrypt_ECB(_key);
+            string text = GetKey().Encrypt_CBC(_value.ToString());
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static void SetBoolArray(BlowFish b, string _key, bool[] _value)
+        public static void SetBoolArray(string _key, bool[] _value)
         {
-            string text = b.Encrypt_CBC(b.Convert_ABool(_value));
-            string key = b.Encrypt_ECB(_key);
+            string text = GetKey().Encrypt_CBC(GetKey().Convert_ABool(_value));
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static void SetFloat(BlowFish b, string _key, float _value)
+        public static void SetFloat(string _key, float _value)
         {
-            string text = b.Encrypt_CBC(_value.ToString());
-            string key = b.Encrypt_ECB(_key);
+            string text = GetKey().Encrypt_CBC(_value.ToString());
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static void SetFloatArray(BlowFish b, string _key, float[] _value)
+        public static void SetFloatArray(string _key, float[] _value)
         {
-            string text = b.Encrypt_CBC(b.Convert_Afloat(_value));
-            string key = b.Encrypt_ECB(_key);
+            string text = GetKey().Encrypt_CBC(GetKey().Convert_Afloat(_value));
+            string key = GetKey().Encrypt_ECB(_key);
             PlayerPrefs.SetString(key, text);
         }
 
-        public static int GetInt(BlowFish b, string _key, int _default = 0)
+        public static int GetInt(string _key, int _default = 0)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return int.Parse(b.Decrypt_CBC(PlayerPrefs.GetString(_key)), System.Globalization.NumberStyles.Integer);
+                return int.Parse(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)), System.Globalization.NumberStyles.Integer);
             return _default;
         }
 
-        public static int[] GetIntArray(BlowFish b, string _key, int[] _default = null)
+        public static int[] GetIntArray(string _key, int[] _default = null)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return b.Desconvert_Aint(b.Decrypt_CBC(PlayerPrefs.GetString(_key)));
+                return GetKey().Desconvert_Aint(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
             return _default;
         }
 
-        public static bool GetBool(BlowFish b, string _key, bool _default = false)
+        public static bool GetBool(string _key, bool _default = false)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return bool.Parse(b.Decrypt_CBC(PlayerPrefs.GetString(_key)));
+                return bool.Parse(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
             return _default;
         }
 
-        public static bool[] GetBoolArray(BlowFish b, string _key, bool[] _default= null)
+        public static bool[] GetBoolArray(string _key, bool[] _default= null)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return b.Desconvert_Abool(b.Decrypt_CBC(PlayerPrefs.GetString(_key)));
+                return GetKey().Desconvert_Abool(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
             return _default;
         }
 
-        public static float GetFloat(BlowFish b, string _key, float _default = 0.0f)
+        public static float GetFloat(string _key, float _default = 0.0f)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return float.Parse(b.Decrypt_CBC(PlayerPrefs.GetString(_key)));
+                return float.Parse(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
             return _default;
         }
 
-        public static float[] GetFloatArray(BlowFish b, string _key, float[] _default = null)
+        public static float[] GetFloatArray(string _key, float[] _default = null)
         {
-            _key = b.Encrypt_ECB(_key);
+            _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
-                return b.Desconvert_Afloat(b.Decrypt_CBC(PlayerPrefs.GetString(_key)));
+                return GetKey().Desconvert_Afloat(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
             return _default;
         }
     }

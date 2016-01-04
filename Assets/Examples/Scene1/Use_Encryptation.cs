@@ -4,19 +4,23 @@ using Arj2D;
 
 public class Use_Encryptation : MonoBehaviour
 {
+    //NOTE: --------------------------------------------
+    //Go to blowfish.cs at the top and change 
+    //const string BlowFishPassword;
+
+
     public int SomeValue = 10;
-    private BlowFish b = new BlowFish("MyPassword");
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            PlayerPreferX.SetInt(b, "Key_SomeValue", SomeValue);
+            PlayerPreferX.SetInt("Key_SomeValue", SomeValue);
             Debug.Log("Saved");
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log(PlayerPreferX.GetInt(b, "Key_SomeValue", -1));
+            Debug.Log(PlayerPreferX.GetInt("Key_SomeValue", -1));
         }
         if (Input.GetKeyDown(KeyCode.R))
         {

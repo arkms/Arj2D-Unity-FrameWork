@@ -427,5 +427,39 @@ namespace Arj2D
             result.Apply();
             return result;
         }
+
+        /// <summary>
+        /// Check if a point in the world is inside in the camera view
+        /// </summary>
+        /// <param name="cam">Camera to check</param>
+        /// <param name="point">Point in the world</param>
+        /// <returns></returns>
+        public static bool InfiniteCameraCanSeePoint(Camera cam, Vector2 point)
+        {
+            Vector3 viewportPoint = cam.WorldToViewportPoint(point);
+            return (viewportPoint.x >= 0f && viewportPoint.x <= 1f && viewportPoint.y >= 0f && viewportPoint.y <= 1f);
+        }
+
+        /// <summary>
+        /// Limit a valie dont be bigger than max
+        /// </summary>
+        /// <param name="_value">value</param>
+        /// <param name="_max">biggest value possible</param>
+        /// <returns></returns>
+        public static float ClampMax(float _value, float _max)
+		{
+			return _value<_max ? _value : _max;
+        }
+
+        /// <summary>
+        /// Limit a value dont be lesser than min
+        /// </summary>
+        /// <param name="_value">value</param>
+        /// <param name="_min">losser value possible</param>
+        /// <returns></returns>
+        public static float ClampMin(float _value, float _min)
+		{
+			return _value>_min ? _value : _min;
+		}
     }
 }
