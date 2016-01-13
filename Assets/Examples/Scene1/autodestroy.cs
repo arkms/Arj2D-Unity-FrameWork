@@ -9,7 +9,7 @@ public class autodestroy : MonoBehaviour2D
 
     void Start()
     {
-        IDinPool = PoolManager.GetPoolManagerID(gameObject);
+        IDinPool = PoolManager.GetPrefabID(gameObject);
     }
 
     void Update()

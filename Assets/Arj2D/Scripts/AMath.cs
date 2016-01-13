@@ -461,5 +461,27 @@ namespace Arj2D
 		{
 			return _value>_min ? _value : _min;
 		}
+
+        /// <summary>
+        /// Return points around a positions
+        /// </summary>
+        /// <returns>The around position.</returns>
+        /// <param name="_center">Center where point going to generate</param>
+        /// <param name="_radius">Radio or distance from center</param>
+        /// <param name="_numberPoints">Number of points to generate</param>
+        public static Vector3[] PointsAroundPosition(Vector3 _center, float _radius, int _numberPoints)
+        {
+            Vector3[] Points = new Vector3[_numberPoints];
+            float rot = 0f;
+            float rateRot = TAU / _numberPoints;
+            for (int i = _numberPoints; i-- != 0; )
+            {
+                Points[i] = Vector3.zero;
+                Points[i].x = _radius * Mathf.Cos(rot) + _center.x;
+                Points[i].y = _radius * Mathf.Sin(rot) + _center.y;
+                rot = rot + rateRot;
+            }
+            return Points;
+        }
     }
 }

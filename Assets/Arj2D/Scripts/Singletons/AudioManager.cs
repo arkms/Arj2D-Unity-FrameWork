@@ -133,6 +133,16 @@ public class AudioManager : MonoBehaviour
         return Background.enabled;
     }
 
+    public static void PauseMusic()
+    {
+        Background.Pause();
+    }
+
+    public static void UnPauseMusic()
+    {
+        Background.UnPause();
+    }
+
     //--------------------------------------------LOOPSource and pitch (Extras) -------------------------------
 
     /// <summary>

@@ -19,12 +19,12 @@ public class PoolManager : MonoBehaviour
     private static Transform transform_; //father transform
 
     /// <summary>
-    /// Add Prefab to PoolManager, in secure mode, that if the prefab already is in poolmanager, dont create other one
+    /// Add Prefab to PoolManager,, ONLY call one to for each prefab, or use AddToPool_Secure
     /// </summary>
     /// <param name="_prefab">Prefab</param>
     /// <param name="_size">Inicial number of prefab</param>
     /// <returns>Return ID in poolManager,, Recommend cache it</returns>
-    public static int AddToPool_Secure(GameObject _prefab, int _size = 3)
+    public static int AddToPool(GameObject _prefab, int _size = 3)
     {
         if (IsPrefabInPool(_prefab))
         {
@@ -39,27 +39,7 @@ public class PoolManager : MonoBehaviour
             }
             return ID;
         }
-        return GetPoolManagerIDByPreafab(_prefab);
-    }
-
-    /// <summary>
-    /// Add Prefab to PoolManager,, ONLY call one to for each prefab, or use AddToPool_Secure
-    /// </summary>
-    /// <param name="_prefab">Prefab</param>
-    /// <param name="_size">Inicial number of prefab</param>
-    /// <returns>Return ID in poolManager,, Recommend cache it</returns>
-    public static int AddToPool(GameObject _prefab, int _size = 3)
-    {
-        Prefabs.Add(_prefab);
-        List<GameObject> pooladd = new List<GameObject>();
-        Pool.Add(pooladd);
-        int ID = Prefabs.Count - 1;
-
-        for (int i = 0; i < _size; i++)
-        {
-            Expand(ID);
-        }
-        return ID;
+        return GetPrefabID(_prefab);
     }
 
     /// <summary>
@@ -174,12 +154,11 @@ public class PoolManager : MonoBehaviour
     /// </summary>
     /// <param name="_go">GameObject to try get prefab</param>
     /// <returns>ID of Prefab or -1 if cant find it. Its better cached it</returns>
-    public static int GetPoolManagerID(GameObject _go)
+    public static int GetPrefabID(string _name)
     {
-        string name = _go.name.Remove(_go.name.IndexOf('_'));
-        for (int i = 0; i < Prefabs.Count; i++)
+        for (int i = Prefabs.Count; i-- != 0; )
         {
-            if (Prefabs[i].name == name)
+            if (Prefabs[i].name == _name)
             {
                 return i;
             }
@@ -205,7 +184,7 @@ public class PoolManager : MonoBehaviour
     /// <param name="_prefab">Prefab to clear</param>
     public static void Clear(GameObject _prefab)
     {
-        int index = GetPoolManagerIDByPreafab(_prefab);
+        int index = GetPrefabID(_prefab);
         for (int i = 0; i < Pool[index].Count; i++)
         {
             Pool[index][i].SetActive(false);
@@ -231,7 +210,7 @@ public class PoolManager : MonoBehaviour
     /// <param name="_prefab"></param>
     public static void ClearAndDestroy(GameObject _prefab)
     {
-        int index = GetPoolManagerIDByPreafab(_prefab);
+        int index = GetPrefabID(_prefab);
         for (int i = 0; i < Pool[index].Count; i++)
         {
             Destroy(Pool[index][i]);
@@ -273,16 +252,9 @@ public class PoolManager : MonoBehaviour
     /// </summary>
     /// <param name="_prefab">Prefab to find</param>
     /// <returns>ID of Prefab or -1 if cant find it. Its better cached it</returns>
-    public static int GetPoolManagerIDByPreafab(GameObject _prefab)
+    public static int GetPrefabID(GameObject _prefab)
     {
-        for (int i = 0; i < Prefabs.Count; i++)
-        {
-            if (Prefabs[i] == _prefab)
-            {
-                return i;
-            }
-        }
-        return -1;
+        return Prefabs.IndexOf(_prefab);
     }
 
     /// <summary>

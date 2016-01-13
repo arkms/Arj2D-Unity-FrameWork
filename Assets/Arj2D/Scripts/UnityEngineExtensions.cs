@@ -255,5 +255,19 @@ namespace Arj2D
             return GeometryUtility.TestPlanesAABB(planes, _spriteRenderer.bounds);
         }
         #endregion
+
+        #region CANVAS
+        //SET IT TO anchoredPosition 
+        public static Vector2 WorldToCanvasPosition(this Canvas canvas, Vector3 _worldPosition, Camera _camera = null)
+        {
+            if (_camera == null)
+            {
+                _camera = Camera.main;
+            }
+            Vector3 viewport_position = _camera.WorldToViewportPoint(_worldPosition);
+            RectTransform canvas_rect = canvas.GetComponent<RectTransform>();
+            return new Vector2((viewport_position.x * canvas_rect.sizeDelta.x) - (canvas_rect.sizeDelta.x * 0.5f), (viewport_position.y * canvas_rect.sizeDelta.y) - (canvas_rect.sizeDelta.y * 0.5f));
+        }
+        #endregion
     }
 }

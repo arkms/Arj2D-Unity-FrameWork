@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace Arj2D
 {
+    [RequireComponent(typeof(MeshRenderer))]
     public class RendererSetLayer : MonoBehaviour
     {
         public int orderLayer;
