@@ -177,6 +177,27 @@ namespace Arj2D
             return null;
         }
 
+        /// <summary>
+        /// Return the full path in the Hierachy of the GameObject.
+        /// </summary>
+        /// <param name="_gameObject">GameObject to find Hierachy</param>
+        /// <returns>String of path of GameObject,, example "Father/OneGameObject/GameObject"</returns>
+        public static string GetFullPath(this GameObject _gameObject)
+        {
+            System.Collections.Generic.List<string> path = new System.Collections.Generic.List<string>();
+
+            Transform current = _gameObject.transform;
+            path.Add(current.name);
+
+            while (current.parent != null)
+            {
+                path.Insert(0, current.parent.name);
+                current = current.parent;
+            }
+
+            return string.Join("/", path.ToArray());
+        }
+
 
         #endregion
 

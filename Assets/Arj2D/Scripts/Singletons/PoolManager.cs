@@ -111,16 +111,16 @@ public class PoolManager : MonoBehaviour
             if (!Pool[_id][i].activeSelf)
             {
                 Pool[_id][i].SetActive(true);
-                Pool[_id][i].transform.position = _pos;
-                Pool[_id][i].transform.rotation = _rotation;
+                Pool[_id][i].transform.localPosition = _pos;
+                Pool[_id][i].transform.localRotation = _rotation;
                 return Pool[_id][i];
             }
         }
 
         //Not anyone free,, lets create more
         GameObject go = Expand(_id);
-        go.transform.position = _pos;
-        go.transform.rotation = _rotation;
+        go.transform.localPosition = _pos;
+        go.transform.localRotation = _rotation;
         return go;
     }
 
@@ -138,14 +138,14 @@ public class PoolManager : MonoBehaviour
             if (!Pool[_id][i].activeSelf)
             {
                 Pool[_id][i].SetActive(true);
-                Pool[_id][i].transform.position = _pos;
+                Pool[_id][i].transform.localPosition = _pos;
                 return Pool[_id][i];
             }
         }
 
         //Not anyone free,, lets create more
         GameObject go = Expand(_id);
-        go.transform.position = _pos;
+        go.transform.localPosition = _pos;
         return go;
     }
 
