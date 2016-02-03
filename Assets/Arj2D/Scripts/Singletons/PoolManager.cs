@@ -26,7 +26,7 @@ public class PoolManager : MonoBehaviour
     /// <returns>Return ID in poolManager,, Recommend cache it</returns>
     public static int AddToPool(GameObject _prefab, int _size = 3)
     {
-        if (IsPrefabInPool(_prefab))
+        if (!IsPrefabInPool(_prefab))
         {
             Prefabs.Add(_prefab);
             List<GameObject> pooladd = new List<GameObject>();
