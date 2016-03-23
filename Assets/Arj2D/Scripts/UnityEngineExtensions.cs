@@ -61,6 +61,50 @@ namespace Arj2D
         {
             _transform.position= new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
         }
+        public static void SetLocalPositionX(this Transform _transform, float _newX)
+        {
+            _transform.localPosition = new Vector3(_newX, _transform.position.y, _transform.position.z);
+        }
+        public static void SetLocalPositionY(this Transform _transform, float _newY)
+        {
+            _transform.localPosition = new Vector3(_transform.position.x, _newY, _transform.position.z);
+        }
+        public static void SetLocalPositionZ(this Transform _transform, float _newZ)
+        {
+            _transform.localPosition = new Vector3(_transform.position.x, _transform.position.y, _newZ);
+        }
+        public static void SetLocalPosition(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
+        {
+            _transform.localPosition = new Vector3(_posX, _posY, _posZ);
+        }
+        public static float GetLocalPositionX(this Transform _transform)
+        {
+            return _transform.localPosition.x;
+        }
+        public static float GetLocalPositionY(this Transform _transform)
+        {
+            return _transform.localPosition.y;
+        }
+        public static float GetLocalPositionZ(this Transform _transform)
+        {
+            return _transform.localPosition.z;
+        }
+        public static void MoveLocal(this Transform _transform, Vector2 _offset)
+        {
+            _transform.localPosition = new Vector3(_transform.localPosition.x + _offset.x, _transform.localPosition.y + _offset.y, _transform.localPosition.z);
+        }
+        public static void MoveLocal(this Transform _transform, Vector3 _offset)
+        {
+            _transform.localPosition = new Vector3(_transform.localPosition.x + _offset.x, _transform.localPosition.y + _offset.y, _transform.localPosition.z + _offset.z);
+        }
+        public static void MoveLocal(this Transform _transform, float _offsetX, float _offsetY)
+        {
+            _transform.localPosition = new Vector3(_transform.localPosition.x + _offsetX, _transform.localPosition.y + _offsetY, _transform.localPosition.z);
+        }
+        public static void MoveLocal(this Transform _transform, float _offsetX, float _offsetY, float _offsetZ)
+        {
+            _transform.localPosition = new Vector3(_transform.localPosition.x + _offsetX, _transform.localPosition.y + _offsetY, _transform.localPosition.z + _offsetZ);
+        }
         /// <summary>
         /// Flip a transform, use for Flip Sprite
         /// </summary>
@@ -288,6 +332,13 @@ namespace Arj2D
             Vector3 viewport_position = _camera.WorldToViewportPoint(_worldPosition);
             RectTransform canvas_rect = canvas.GetComponent<RectTransform>();
             return new Vector2((viewport_position.x * canvas_rect.sizeDelta.x) - (canvas_rect.sizeDelta.x * 0.5f), (viewport_position.y * canvas_rect.sizeDelta.y) - (canvas_rect.sizeDelta.y * 0.5f));
+        }
+        #endregion
+
+        #region RectTrasnform
+        public static Vector3 ToWolrdPosition(this RectTransform _recTransform)
+        {
+            return _recTransform.TransformPoint(_recTransform.rect.center);
         }
         #endregion
     }
