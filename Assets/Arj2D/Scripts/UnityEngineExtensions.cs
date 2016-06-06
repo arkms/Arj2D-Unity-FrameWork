@@ -21,6 +21,10 @@ namespace Arj2D
         {
             _transform.position= new Vector3(_posX, _posY, _posZ);
         }
+        public static void SetPositionXY(this Transform _transform, float _posX, float _posY)
+        {
+            _transform.position = new Vector3(_posX, _posY, _transform.position.z);
+        }
         public static float GetPositionX(this Transform _transform)
         {
             return _transform.position.x;
@@ -76,6 +80,10 @@ namespace Arj2D
         public static void SetLocalPosition(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
         {
             _transform.localPosition = new Vector3(_posX, _posY, _posZ);
+        }
+        public static void SetLocalPositionXY(this Transform _transform, float _posX, float _posY)
+        {
+            _transform.localPosition = new Vector3(_posX, _posY, _transform.localPosition.z);
         }
         public static float GetLocalPositionX(this Transform _transform)
         {
