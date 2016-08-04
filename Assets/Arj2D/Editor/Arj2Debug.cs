@@ -71,5 +71,12 @@ namespace Arj2D
             PlayerPrefs.DeleteAll();
             Debug.Log("Save data borrado");
         }
+
+        [MenuItem("Arj2D/Debug/CountTotalGameObjects")]
+        public static void CountTotalGameObject()
+        {
+            int length = GameObject.FindObjectsOfType<Transform>().Length;
+            Debug.Log("Hay " + length + " en escena");
+        }
     }
 }

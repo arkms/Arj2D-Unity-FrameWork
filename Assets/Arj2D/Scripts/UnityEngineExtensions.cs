@@ -300,9 +300,15 @@ namespace Arj2D
         #endregion
 
         #region VECTOR2
-        public static Vector3 ToVector3(this Vector2 _vector2)
+        public static Vector3 ToVector3(this Vector2 _vector2, float _z = 0f)
         {
-            return new Vector3(_vector2.x, _vector2.y);
+            return new Vector3(_vector2.x, _vector2.y, _z);
+        }
+        public static Vector2 Rotate(this Vector2 _vector2, float _rad)
+        {
+            float c = Mathf.Cos(_rad);
+            float s = Mathf.Sin(_rad);
+            return new Vector2(_vector2.x *c - _vector2.y * s, _vector2.y = _vector2.x * s + _vector2.y * c);
         }
         #endregion
 

@@ -118,7 +118,17 @@ namespace Arj2D
         /// <returns>Angle</returns>
         public static float V2ToAngle(Vector2 _v2)
         {
-            return Mathf.Atan2(_v2.y, _v2.x);
+            return Mathf.Atan2(_v2.y, _v2.x) * Mathf.Rad2Deg;
+        }
+
+        /// <summary>
+        /// Direction in Vector2 to Angle in RAD
+        /// </summary>
+        /// <param name="_v2">Vector Direction</param>
+        /// <returns></returns>
+        public static float V2ToAngleRad(Vector2 _v2)
+        {
+             return Mathf.Atan2(_v2.y, _v2.x);
         }
 
         /// <summary>
