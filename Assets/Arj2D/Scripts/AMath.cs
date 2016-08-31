@@ -8,6 +8,17 @@ namespace Arj2D
         public const float TAU = Mathf.PI * 2f;
 
         /// <summary>
+        /// Like Mathf.Sign, but return 0f with 0 and not 1f and can set a deadzone
+        /// </summary>
+        /// <param name="_value">Value to check sign</param>
+        /// <param name="_deadZone">Offset with to considerer with 0</param>
+        /// <returns></returns>
+        public static float Sign(float _value, float _deadZone = 0f)
+        {
+            return _value > _deadZone ? 1f : (_value < -_deadZone ? -1f : 0f);
+        }
+
+        /// <summary>
         /// Calculate the distance between two vector3, ignoring the Z
         /// </summary>
         /// <param name="_vA">Posistion of GameObjec1</param>

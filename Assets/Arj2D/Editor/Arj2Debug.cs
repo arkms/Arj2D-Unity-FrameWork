@@ -5,25 +5,7 @@ namespace Arj2D
 {
     public class Arj2Debug
     {
-
-        [MenuItem("Arj2D/Debug/World Position")]
-        public static void PrintGlobalPosition()
-        {
-            if (Selection.activeGameObject != null)
-            {
-                Debug.Log(Selection.activeGameObject.name + " is at " + Selection.activeGameObject.transform.position);
-            }
-        }
-
-        [MenuItem("Arj2D/Debug/World Rotation")]
-        public static void PrintGlobalRotation()
-        {
-            if (Selection.activeGameObject != null)
-            {
-                Debug.Log(Selection.activeGameObject.name + " is at " + Selection.activeGameObject.transform.eulerAngles);
-            }
-        }
-
+        //Remove all shadow in MeshRenderes selected
         [MenuItem("Arj2D/Debug/Remove Shadows")]
         public static void RemoveShadows()
         {
@@ -45,6 +27,7 @@ namespace Arj2D
             }
         }
 
+        //Get center position of all childrens
         [MenuItem("Arj2D/Debug/Center")]
         public static void Center()
         {
@@ -77,6 +60,25 @@ namespace Arj2D
         {
             int length = GameObject.FindObjectsOfType<Transform>().Length;
             Debug.Log("Hay " + length + " en escena");
+        }
+
+        //Select and focus in select scene
+        [MenuItem("Arj2D/Debug/Select Player and Focus #_p")]
+        public static void SelectPlayerandFocus()
+        {
+            if (Selection.activeGameObject == null)
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("Player");
+                if (go != null)
+                {
+                    Selection.activeGameObject = go;
+                    SceneView.lastActiveSceneView.FrameSelected();
+                }
+                else
+                {
+                    Debug.LogWarning("There is not any GameObject with 'Player' TAG");
+                }
+            }
         }
     }
 }

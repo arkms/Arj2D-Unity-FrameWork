@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+//using System.Reflection;
 
 namespace Arj2D
 {
@@ -249,6 +250,63 @@ namespace Arj2D
 
             return string.Join("/", path.ToArray());
         }
+
+        /*
+        /// <summary>
+        /// Like SendMessage but is not necessary the GameObject be active
+        /// </summary>
+        /// <param name="_gameObject">GameObject to BroadCastMenssage</param>
+        /// <param name="_methodName">Name of function to call</param>
+        /// <param name="_parameters">Parameters (optional)</param>
+        public static void SendMessageSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
+        {
+            MonoBehaviour[] components = _gameObject.GetComponents<MonoBehaviour>();
+            for (int i = 0; i < components.Length; i++)
+            {
+                Type scriptType = components[i].GetType();//Get ScriptType //This not return MonoBehaviour
+                MethodInfo methodInfo = scriptType.GetMethod(_methodName);
+                if (scriptType.GetMethod(_methodName) != null) //This script contains this Method?
+                {
+                    methodInfo.Invoke(components[i], _parameters); //call It
+                }
+            }
+        }
+
+        /// <summary>
+        /// Like SendMEssageUpwards but is not necessary the GameObject be active
+        /// </summary>
+        /// <param name="_gameObject">GameObject to SendMenssage</param>
+        /// <param name="_methodName">Name of function to call</param>
+        /// <param name="_parameters">Parameters (optional)</param>
+        public static void SendMessageUpwardsSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
+        {
+            Transform tranform = _gameObject.transform;
+            while (tranform != null)
+            {
+                tranform.gameObject.SendMessageSpecial(_methodName, _parameters);
+                tranform = tranform.parent;
+            }
+        }
+
+        /// <summary>
+        /// Like BroadCastMessage but is not necessary the GameObject be active
+        /// </summary>
+        /// <param name="_gameObject">GameObject to BroadCastMenssage</param>
+        /// <param name="_methodName">Name of function to call</param>
+        /// <param name="_parameters">Parameters (optional)</param>
+        public static void BroadCastMessageSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
+        {
+            MonoBehaviour[] components = _gameObject.GetComponentsInChildren<MonoBehaviour>(true);
+            for (int i = 0; i < components.Length; i++)
+            {
+                Type scriptType = components[i].GetType();//Get ScriptType //This not return MonoBehaviour
+                MethodInfo methodInfo = scriptType.GetMethod(_methodName);
+                if (scriptType.GetMethod(_methodName) != null) //This script contains this Method?
+                {
+                    methodInfo.Invoke(components[i], _parameters); //call It
+                }
+            }
+        }*/
 
 
         #endregion
