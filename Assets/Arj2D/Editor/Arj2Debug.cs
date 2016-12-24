@@ -63,7 +63,7 @@ namespace Arj2D
         }
 
         //Select and focus in select scene
-        [MenuItem("Arj2D/Debug/Select Player and Focus #_p")]
+        [MenuItem("Arj2D/Debug/Select Player and Focus #&p")]
         public static void SelectPlayerandFocus()
         {
             if (Selection.activeGameObject == null)

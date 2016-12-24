@@ -377,6 +377,50 @@ namespace Arj2D
         }
         #endregion
 
+        #region COLOR
+        /// <summary>
+        /// Returns inverted color with the same alpha
+        /// </summary>
+        public static Color Inverted(this Color _color)
+        {
+            Color result = Color.white - _color;
+            result.a = _color.a;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns new color with modified red channel
+        /// </summary>
+        public static Color SetR(this Color _color, float _r)
+        {
+            return new Color(_r, _color.g, _color.b, _color.a);
+        }
+
+        /// <summary>
+        /// Returns new color with modified green channel
+        /// </summary>
+        public static Color SetG(this Color _color, float _g)
+        {
+            return new Color(_color.r, _g, _color.b, _color.a);
+        }
+
+        /// <summary>
+        /// Returns new color with modified blue channel
+        /// </summary>
+        public static Color SetB(this Color _color, float _b)
+        {
+            return new Color(_color.r, _color.g, _b, _color.a);
+        }
+
+        /// <summary>
+        /// Returns new color with modified alpha channel
+        /// </summary>
+        public static Color SetA(this Color _color, float _a)
+        {
+            return new Color(_color.r, _color.g, _color.b, _a);
+        }
+        #endregion
+
         #region RENDERER
         public static bool IsVisibleInCamera(this Renderer _renderer, Camera camera)
         {

@@ -380,7 +380,6 @@ public class AudioManager : MonoBehaviour
         return newAudioSource2;
     }
 
-
     private static AudioManager instance = null;
     public static AudioManager Instance
     {
@@ -388,5 +387,11 @@ public class AudioManager : MonoBehaviour
         {
             return instance;
         }
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    public static void OnLoad()
+    {
+        Init();
     }
 }
