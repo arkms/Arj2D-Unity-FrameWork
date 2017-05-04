@@ -16,22 +16,5 @@ namespace Arj2D
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.farClipPlane = 50;
         }
-
-        [MenuItem("Arj2D/Debug/Add Capsule Collider 2D")]
-        public static void AddCapsuleCollider2D()
-        {
-            if (Selection.activeGameObject != null)
-            {
-                GameObject go = Selection.activeGameObject;
-                CircleCollider2D colCircle = go.AddComponent<CircleCollider2D>();
-                colCircle.offset = new Vector2(0f, -0.5f);
-                colCircle.radius = 0.5f;
-                colCircle = go.AddComponent<CircleCollider2D>();
-                colCircle.offset = new Vector2(0f, 0.5f);
-                colCircle.radius = 0.5f;
-                BoxCollider2D colBox = go.AddComponent<BoxCollider2D>();
-                colBox.size = new Vector2(1f, 1f);
-            }            
-        }
     }
 }

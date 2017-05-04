@@ -35,7 +35,8 @@ public class AudioManager : MonoBehaviour
             GameObject go = new GameObject("AudioManager");
             instance =go.AddComponent<AudioManager>();
             go.isStatic = true;
-            go.AddComponent<AudioListener>();
+            if(Camera.main == null || Camera.main.GetComponent<AudioListener>() == null) //Just add AudiListener if is not already one
+                go.AddComponent<AudioListener>();
             Sound = go.AddComponent<AudioSource>();
             Sound.loop = false;
             Sound.playOnAwake = false;
