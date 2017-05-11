@@ -139,7 +139,7 @@ namespace Arj2D
         /// <returns></returns>
         public static float V2ToAngleRad(Vector2 _v2)
         {
-             return Mathf.Atan2(_v2.y, _v2.x);
+            return Mathf.Atan2(_v2.y, _v2.x);
         }
 
         /// <summary>
@@ -468,8 +468,8 @@ namespace Arj2D
         /// <param name="_max">biggest value possible</param>
         /// <returns></returns>
         public static float ClampMax(float _value, float _max)
-		{
-			return _value<_max ? _value : _max;
+        {
+            return _value < _max ? _value : _max;
         }
 
         /// <summary>
@@ -479,9 +479,9 @@ namespace Arj2D
         /// <param name="_min">losser value possible</param>
         /// <returns></returns>
         public static float ClampMin(float _value, float _min)
-		{
-			return _value>_min ? _value : _min;
-		}
+        {
+            return _value > _min ? _value : _min;
+        }
 
         /// <summary>
         /// Return points around a positions
@@ -495,7 +495,7 @@ namespace Arj2D
             Vector3[] Points = new Vector3[_numberPoints];
             float rot = 0f;
             float rateRot = TAU / _numberPoints;
-            for (int i = _numberPoints; i-- != 0; )
+            for (int i = _numberPoints; i-- != 0;)
             {
                 Points[i] = Vector3.zero;
                 Points[i].x = _radius * Mathf.Cos(rot) + _center.x;
@@ -503,6 +503,47 @@ namespace Arj2D
                 rot = rot + rateRot;
             }
             return Points;
+        }
+
+        ///Based in https://en.wikipedia.org/wiki/Point_in_polygon
+        /// <summary>
+        /// Check if point is inside a polygon
+        /// </summary>
+        /// <param name="_point">Point to test</param>
+        /// <param name="_polygonVertices">Vertex of polygon</param>
+        /// <returns></returns>
+        public static bool PointInsidePolygon(Vector2 _pointTest, Vector2[] _polygonVertices)
+        {
+            int nCounter = 0;
+            int nPoints = _polygonVertices.Length;
+            Vector2 p1, p2;
+            p1 = _polygonVertices[0];
+            for (int i = 1; i < nPoints; i++)
+            {
+                p2 = _polygonVertices[i % nPoints];
+                if (_pointTest.y > Mathf.Min(p1.y, p2.y))
+                {
+                    if (_pointTest.y <= Mathf.Max(p1.y, p2.y))
+                    {
+                        if (_pointTest.x <= Mathf.Max(p1.x, p2.x))
+                        {
+                            if (p1.y != p2.y)
+                            {
+                                float xInters = (_pointTest.y - p1.y) * (p2.x - p1.x) / (p2.y - p1.y) + p1.x;
+                                if ((p1.x == p2.x) || (_pointTest.x <= xInters))
+                                {
+                                    nCounter++;
+                                }
+                            }
+                        }
+                    }
+                }
+                p1 = p2;
+            }
+            if ((nCounter % 2) == 0)
+                return false;
+            else
+                return true;
         }
     }
 }

@@ -150,6 +150,18 @@ namespace Arj2D
             _transform.rotation = Quaternion.identity;
             _transform.localScale = Vector3.zero;
         }
+        public static void LookAt2D(this Transform _transform, Transform _target, float _offset = 0f)
+        {
+            Vector3 relative = _transform.InverseTransformPoint(_target.position);
+            float angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg - _offset;
+            _transform.Rotate(0, 0, -angle, Space.Self);
+        }
+        public static void LookAt2D(this Transform _transform, Vector3 _pos, float _offset)
+        {
+            Vector3 relative = _transform.InverseTransformPoint(_pos);
+            float angle = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg - _offset;
+            _transform.Rotate(0, 0, -angle, Space.Self);
+        }
         #endregion
 
         #region GAMEOBJECT
