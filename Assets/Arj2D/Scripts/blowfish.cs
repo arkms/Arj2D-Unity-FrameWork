@@ -62,7 +62,7 @@ namespace Arj2D
 
     public class BlowFish
     {
-        const string BlowFishPassword = "19AE20084RJ13RD4";  //CHANGEME  <-----------------------------------------------------------------------------------------
+        const string BlowFishPassword = "19AE20084RJ13RD4";  //CHANGE ME  <-----------------------------------------------------------------------------------------
 
 
         #region "Global variables and constants"

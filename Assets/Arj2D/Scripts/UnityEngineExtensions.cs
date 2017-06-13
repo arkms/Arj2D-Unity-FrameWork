@@ -44,11 +44,11 @@ namespace Arj2D
         }
         public static void ShiftPositionY(this Transform _transform, float _offsetY)
         {
-            _transform.position= new Vector3(0f, _transform.position.y + _offsetY, 0f);
+            _transform.position = new Vector3(_transform.position.x, _transform.position.y + _offsetY, _transform.position.z);
         }
         public static void ShiftPositionZ(this Transform _transform, float _offsetZ)
         {
-            _transform.position= new Vector3(0f, 0f, _transform.position.z + _offsetZ);
+            _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.z + _offsetZ);
         }
         public static void Move(this Transform _transform, Vector2 _offset)
         {

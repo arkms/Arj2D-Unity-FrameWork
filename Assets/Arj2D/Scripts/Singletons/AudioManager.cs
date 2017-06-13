@@ -68,7 +68,7 @@ public class AudioManager : MonoBehaviour
     public static void SetEnable_fx(bool _enable)
     {
         Sound.enabled = _enable;
-        FreeAllsounds();
+        //FreeAllsounds();
         PlayerPrefs.SetInt(K_sound, (_enable ? 1 : 0));
     }
 
@@ -92,7 +92,7 @@ public class AudioManager : MonoBehaviour
     {
         Sound.Stop();
         Background.Stop();
-        StopAllSounds_PitchAndLoopsOnly();
+        //StopAllSounds_PitchAndLoopsOnly();
     }
 
 
@@ -144,8 +144,7 @@ public class AudioManager : MonoBehaviour
         Background.UnPause();
     }
 
-    //--------------------------------------------LOOPSource and pitch (Extras) -------------------------------
-
+    //--------------------------------------------LOOPSource and pitch (Extras) ALFA -------------------------------
     /// <summary>
     /// Play AudioClip in loop
     /// </summary>
@@ -155,12 +154,13 @@ public class AudioManager : MonoBehaviour
     {
         if (IsEnable_fx())
         {
-            AudioSource audio = GetAudioSource();
+            int index = GetAudioSource();
+            AudioSource audio = list_extraSnd[index];
             audio.loop = true;
             audio.volume = Sound.volume;
             audio.clip = _clip;
             audio.Play();
-            return list_extraSnd.IndexOf(audio);
+            return index;
         }
         return -1;
     }
@@ -175,33 +175,15 @@ public class AudioManager : MonoBehaviour
     {
         if (IsEnable_fx())
         {
-            AudioSource audio = GetAudioSource();
+            int index = GetAudioSource();
+            AudioSource audio = list_extraSnd[index];
             audio.loop = true;
             audio.clip = _clip;
             audio.volume = _volume;
             audio.Play();
-            return list_extraSnd.IndexOf(audio);
+            return index;
         }
         return -1;
-    }
-
-    /// <summary>
-    /// Stop a AudioSource playing a clip
-    /// </summary>
-    /// <param name="_clip">Clip to stop</param>
-    public static void StopSound_Loop(AudioClip _clip)
-    {
-        for (int i = 0; i < list_extraSnd.Count; i++)
-        {
-            if (list_extraSnd[i].isPlaying && list_extraSnd[i].clip == _clip && list_extraSnd[i].loop)
-            {
-                list_extraSnd[i].Stop();
-                list_extraSnd[i].clip = null;
-                list_extraSnd[i].loop = false;
-                return;
-            }
-        }
-        Debug.LogWarning(_clip + " is not in loop");
     }
 
     /// <summary>
@@ -249,7 +231,6 @@ public class AudioManager : MonoBehaviour
     {
         if (list_extraSnd.Count > 0)
         {
-
             GameObject go = list_extraSnd[0].gameObject;
             for (int i = 0; i < list_extraSnd.Count; i++)
             {
@@ -275,19 +256,6 @@ public class AudioManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Change Volume of specific AudioSource with loop,, this only for this play
-    /// </summary>
-    /// <param name="_volumen">Volumen between 0.0f - 1.0f</param>
-    public static void ChangeVolumen_LoopAll(float _volumen)
-    {
-        for (int i = 0; i < list_extraSnd.Count; i++)
-        {
-            if (list_extraSnd[i].loop)
-                list_extraSnd[i].volume = _volumen;
-        }
-    }
-
-    /// <summary>
     /// Play sound with pitch
     /// </summary>
     /// <param name="_clip">Clip to play</param>
@@ -296,12 +264,13 @@ public class AudioManager : MonoBehaviour
     {
         if (IsEnable_fx())
         {
-            AudioSource audio = GetAudioSource();
+            int index = GetAudioSource();
+            AudioSource audio = list_extraSnd[index];
             audio.clip = _clip;
             audio.pitch = _pitch;
             audio.volume = Sound.volume;
             audio.Play();
-            return list_extraSnd.IndexOf(audio);
+            return index;
         }
         return -1;
     }
@@ -316,12 +285,13 @@ public class AudioManager : MonoBehaviour
     {
         if (IsEnable_fx())
         {
-            AudioSource audio = GetAudioSource();
+            int index = GetAudioSource();
+            AudioSource audio = list_extraSnd[index];
             audio.clip = _clip;
             audio.pitch = _pitch;
             audio.volume = _volume;
             audio.Play();
-            return list_extraSnd.IndexOf(audio);
+            return index;
         }
         return -1;
     }
@@ -337,7 +307,8 @@ public class AudioManager : MonoBehaviour
     {
         if (IsEnable_fx())
         {
-            AudioSource audio = GetAudioSource();
+            int index = GetAudioSource();
+            AudioSource audio = list_extraSnd[index];
             audio.clip = _clip;
             audio.pitch = _pitch;
             audio.volume = (_volume == -1) ? Sound.volume : _volume;
@@ -350,7 +321,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Get one Audiosource that is not in use or create it
     /// </summary>
-    private static AudioSource GetAudioSource()
+    private static int GetAudioSource()
     {
         for (int i = 0; i < list_extraSnd.Count; i++)
         {
@@ -358,7 +329,7 @@ public class AudioManager : MonoBehaviour
             {
                 list_extraSnd[i].pitch = 1.0f;
                 list_extraSnd[i].volume = Sound.volume;
-                return list_extraSnd[i];
+                return i;
             }
         }
 
@@ -371,14 +342,14 @@ public class AudioManager : MonoBehaviour
             AudioSource newAudioSource = go.AddComponent<AudioSource>();
             newAudioSource.playOnAwake = false;
             list_extraSnd.Add(newAudioSource);
-            return newAudioSource;
+            return list_extraSnd.Count-1;
         }
 
         //we add other
         AudioSource newAudioSource2 = Sound.transform.GetChild(0).gameObject.AddComponent<AudioSource>();
         newAudioSource2.playOnAwake = false;
         list_extraSnd.Add(newAudioSource2);
-        return newAudioSource2;
+        return list_extraSnd.Count - 1;
     }
 
     private static AudioManager instance = null;
