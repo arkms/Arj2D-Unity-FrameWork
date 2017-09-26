@@ -27,7 +27,7 @@ namespace Arj2D
 
         private Transform trans;                        //transform of the object this script is attached to                    
         private Mesh mesh;
-        private new PolygonCollider2D collider;
+        private PolygonCollider2D _collider;
 
         private LinkedList<Vector3> centerPositions;    //the previous positions of the object this script is attached to
         private LinkedList<Vertex> leftVertices;        //the left vertices derived from the center positions
@@ -45,7 +45,7 @@ namespace Arj2D
         public void ChangeTrailMaterial(Material material)
         {
             trailMaterial = material;
-            collider.GetComponent<Renderer>().material = material;
+            _collider.GetComponent<Renderer>().material = material;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Arj2D
         public void ChangeColliderTrigger(bool isTrigger)
         {
             colliderIsTrigger = isTrigger;
-            collider.isTrigger = isTrigger;
+            _collider.isTrigger = isTrigger;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Arj2D
         public void ChangeColliderEnabled(bool enabled)
         {
             colliderEnabled = enabled;
-            collider.enabled = enabled;
+            _collider.enabled = enabled;
         }
 
         //************
@@ -80,9 +80,9 @@ namespace Arj2D
             trail.GetComponent<Renderer>().material = trailMaterial;
 
             //get and set the polygon collider on this trail.
-            collider = trail.GetComponent<PolygonCollider2D>();
-            collider.isTrigger = colliderIsTrigger;
-            collider.SetPath(0, null);
+            _collider = trail.GetComponent<PolygonCollider2D>();
+            _collider.isTrigger = colliderIsTrigger;
+            _collider.SetPath(0, null);
             Rigidbody2D rigi2d = trail.GetComponent<Rigidbody2D>();
             rigi2d.gravityScale = 0f;
             rigi2d.isKinematic = RigibodyIsKinematic;
@@ -284,7 +284,7 @@ namespace Arj2D
 
             if (colliderEnabled)
             {
-                collider.SetPath(0, colliderPath);
+                _collider.SetPath(0, colliderPath);
             }
         }
 

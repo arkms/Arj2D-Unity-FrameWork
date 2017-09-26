@@ -20,6 +20,7 @@ namespace Arj2D
             }
         }
 
+#pragma warning disable 0109
         private Collider2D col2d;
         protected new Collider2D collider2D
         {
@@ -68,7 +69,7 @@ namespace Arj2D
         }
 
         private SpriteRenderer sr;
-        protected SpriteRenderer spriteRender
+        protected new SpriteRenderer spriteRender
         {
             get
             {
@@ -100,5 +101,6 @@ namespace Arj2D
                 }
             }
         }
+#pragma warning restore 0109
     }
 }
