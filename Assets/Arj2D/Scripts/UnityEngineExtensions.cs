@@ -380,12 +380,57 @@ namespace Arj2D
             float s = Mathf.Sin(_rad);
             return new Vector2(_vector2.x *c - _vector2.y * s, _vector2.y = _vector2.x * s + _vector2.y * c);
         }
+        /// <summary>
+        /// Return Vector2( X value, 0f)
+        /// </summary>
+        /// <param name="_vector2"></param>
+        /// <returns></returns>
+        public static Vector2 OnlyX(this Vector2 _vector2)
+        { 
+            return new Vector2(_vector2.x, 0f);
+        }
+        /// <summary>
+        /// Return Vector2( 0f, Y value)
+        /// </summary>
+        /// <param name="_vector2"></param>
+        /// <returns></returns>
+        public static Vector2 OnlyY(this Vector2 _vector2)
+        {
+            return new Vector2(0f, _vector2.y);
+        }
         #endregion
 
         #region VECTOR3
         public static Vector2 ToVector2(this Vector3 _vector3)
         {
             return new Vector2(_vector3.x, _vector3.y);
+        }
+        /// <summary>
+        /// Return new Vector3( X value, 0f, 0f)
+        /// </summary>
+        /// <param name="_vector3"></param>
+        /// <returns></returns>
+        public static Vector3 OnlyX(this Vector3 _vector3)
+        {
+            return new Vector3(_vector3.x, 0f, 0f);
+        }
+        /// <summary>
+        /// Return new Vector3( 0f, y value, 0f)
+        /// </summary>
+        /// <param name="_vector3"></param>
+        /// <returns></returns>
+        public static Vector3 OnlyY(this Vector3 _vector3)
+        {
+            return new Vector3(0f, _vector3.y, 0f);
+        }
+        /// <summary>
+        /// Return new Vector3( 0f, 0f, z value)
+        /// </summary>
+        /// <param name="_vector3"></param>
+        /// <returns></returns>
+        public static Vector3 OnlyZ(this Vector3 _vector3)
+        {
+            return new Vector3(0f, 0f, _vector3.z);
         }
         #endregion
 
