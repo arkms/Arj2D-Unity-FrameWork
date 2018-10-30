@@ -545,5 +545,45 @@ namespace Arj2D
             else
                 return true;
         }
+
+        /// <summary>
+        /// Return [0-1] from value takin _min 0 and _max 1
+        /// </summary>
+        /// <param name="_value">Value to return normalize it</param>
+        /// <param name="_min">Min taking like 0</param>
+        /// <param name="_max">Max taking lie 1</param>
+        /// <returns>Return Normalize value</returns>
+        public static float Normalize(float _value, float _min, float _max)
+        {
+            return (_value - _min) / (_max - _min);
+        }
+
+        /// <summary>
+        /// Return the point closest to the line made with Vector A and Vector B from a point in world
+        /// </summary>
+        /// <param name="_vA">Vector A</param>
+        /// <param name="_vB">Vector B</param>
+        /// <param name="_vP">Point from seach closest point in line</param>
+        /// <returns></returns>
+        public static Vector3 ClosestPointOnLine(Vector3 _vA, Vector3 _vB, Vector3 _vP)
+        {
+            var vVector1 = _vP - _vA;
+            var vVector2 = (_vB - _vA).normalized;
+
+            var d = Vector3.Distance(_vA, _vB);
+            var t = Vector3.Dot(vVector2, vVector1);
+
+            if (t <= 0)
+                return _vA;
+
+            if (t >= d)
+                return _vB;
+
+            Vector3 vVector3 = vVector2 * t;
+
+            Vector3 vClosestPoint = _vA + vVector3;
+
+            return vClosestPoint;
+        }
     }
 }

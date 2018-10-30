@@ -514,5 +514,24 @@ namespace Arj2D
             return _recTransform.TransformPoint(_recTransform.rect.center);
         }
         #endregion
+
+        #region ARRAYS
+        /// <summary>
+        /// Check if array is null or empty
+        /// </summary>
+        /// <typeparam name="T">Type of list</typeparam>
+        /// <param name="_array">Array to test</param>
+        /// <returns>if is null or empty return true, otherwise return false</returns>
+        public static bool IsNullOrEmpty<T>(this T[] _array)
+        {
+            if (_array == null)
+                return true;
+
+            if (_array.Length == 0)
+                return true;
+
+            return false;
+        }
+        #endregion
     }
 }
