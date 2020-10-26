@@ -82,7 +82,8 @@ namespace Arj2D
             //get and set the polygon collider on this trail.
             _collider = trail.GetComponent<PolygonCollider2D>();
             _collider.isTrigger = colliderIsTrigger;
-            _collider.SetPath(0, null);
+            Vector2[] v = new Vector2[0];
+            _collider.SetPath(0, v);
             Rigidbody2D rigi2d = trail.GetComponent<Rigidbody2D>();
             rigi2d.gravityScale = 0f;
             rigi2d.isKinematic = RigibodyIsKinematic;

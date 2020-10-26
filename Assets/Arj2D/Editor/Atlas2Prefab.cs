@@ -54,11 +54,15 @@ public class Atlas2Prefab : EditorWindow
             EditorUtility.DisplayProgressBar("Converting", "Converting Sprites to Prefabs", progressActual / atlasAssets.LongLength);
             if (AssetDatabase.IsSubAsset(asset))
             {
+#pragma warning disable 0618
                 Object obj = PrefabUtility.CreateEmptyPrefab(path + asset.name + ".prefab");
+#pragma warning restore 0618
                 GameObject go = new GameObject();
                 SpriteRenderer sptmp = go.AddComponent<SpriteRenderer>();
                 sptmp.sprite = (Sprite)asset;
+#pragma warning disable 0618
                 PrefabUtility.ReplacePrefab(go, obj, ReplacePrefabOptions.ConnectToPrefab);
+#pragma warning restore 0618
                 DestroyImmediate(go);
             }
             progressActual++;

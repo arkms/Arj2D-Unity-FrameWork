@@ -35,7 +35,7 @@ public class TiledMapping : EditorWindow
     //Start
     void OnEnable()
     {
-        SceneView.onSceneGUIDelegate += this.SceneGUI;
+        SceneView.duringSceneGui += this.SceneGUI;
         Tools.current = Tool.View;
         Tools.viewTool = ViewTool.None; //FPS
 
@@ -136,7 +136,7 @@ public class TiledMapping : EditorWindow
     //at close the windows
     void OnDestroy()
     {
-        SceneView.onSceneGUIDelegate -= this.SceneGUI;
+        SceneView.duringSceneGui -= this.SceneGUI;
     }
 
     //extras funcitions---------------------------
