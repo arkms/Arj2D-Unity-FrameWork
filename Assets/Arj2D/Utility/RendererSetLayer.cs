@@ -14,7 +14,7 @@ namespace Arj2D
         void Awake()
         {
             Renderer paint = GetComponent<Renderer>();
-            paint.sortingLayerID = IDLayerName;
+            paint.sortingLayerID = SortingLayer.NameToID(LayerName);
             paint.sortingOrder = orderLayer;
         }
     }

@@ -8,12 +8,12 @@ public class Show_TrailRenderWithCol : MonoBehaviour2D
 
 	void Update ()
 	{
-        transform.ShiftPositionX(dir * 5f * Time.deltaTime);
-        if (dir > 0 && transform.GetPositionX() >= 5)
+        transform.X(dir * 5f * Time.deltaTime);
+        if (dir > 0 && transform.GetX() >= 5)
         {
             dir = -1;
         }
-        else if (dir < 0 && transform.GetPositionX() <= -5)
+        else if (dir < 0 && transform.GetX() <= -5)
         {
             dir = 1;
         }

@@ -127,20 +127,22 @@ namespace Arj2D
             return go;
         }
 
-        public GameObject Spawn()
+        public GameObject Spawn(bool _autoActive = true)
         {
             for (int i = 0; i < Pool.Count; i++)
             {
                 if (!Pool[i].activeSelf)
                 {
-                    Pool[i].SetActive(true);
+                    if (_autoActive)
+                        Pool[i].SetActive(true);
                     return Pool[i];
                 }
             }
 
             //Not anyone free,, lets create more
             GameObject go = Expand();
-            go.SetActive(true);
+            if (_autoActive)
+                go.SetActive(true);
             return go;
         }
 

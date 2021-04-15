@@ -490,14 +490,13 @@ namespace Arj2D
         /// <param name="_center">Center where point going to generate</param>
         /// <param name="_radius">Radio or distance from center</param>
         /// <param name="_numberPoints">Number of points to generate</param>
-        public static Vector3[] PointsAroundPosition(Vector3 _center, float _radius, int _numberPoints)
+        public static Vector2[] PointsAroundPosition(Vector3 _center, float _radius, int _numberPoints, float _addAngularOffset = 0f)
         {
-            Vector3[] Points = new Vector3[_numberPoints];
-            float rot = 0f;
+            Vector2[] Points = new Vector2[_numberPoints];
+            float rot = _addAngularOffset;
             float rateRot = TAU / _numberPoints;
             for (int i = _numberPoints; i-- != 0;)
             {
-                Points[i] = Vector3.zero;
                 Points[i].x = _radius * Mathf.Cos(rot) + _center.x;
                 Points[i].y = _radius * Mathf.Sin(rot) + _center.y;
                 rot = rot + rateRot;

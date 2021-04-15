@@ -6,95 +6,95 @@ namespace Arj2D
     public static class UnityEngineExtensions
     {
         #region TRASNFORM
-        public static void SetPositionX(this Transform _transform, float _newX)
+        public static void X(this Transform _transform, float _newX)
         {
             _transform.position = new Vector3(_newX, _transform.position.y, _transform.position.z);
         }
-        public static void SetPositionY(this Transform _transform, float _newY)
+        public static void Y(this Transform _transform, float _newY)
         {
             _transform.position = new Vector3(_transform.position.x, _newY, _transform.position.z);
         }
-        public static void SetPositionZ(this Transform _transform, float _newZ)
+        public static void Z(this Transform _transform, float _newZ)
         {
-            _transform.position= new Vector3(_transform.position.x, _transform.position.y, _newZ);
+            _transform.position = new Vector3(_transform.position.x, _transform.position.y, _newZ);
         }
-        public static void SetPosition(this Transform _transform, float _posX, float _posY, float _posZ=0.0f)
+        public static void SetPos(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
         {
-            _transform.position= new Vector3(_posX, _posY, _posZ);
+            _transform.position = new Vector3(_posX, _posY, _posZ);
         }
-        public static void SetPositionXY(this Transform _transform, float _posX, float _posY)
+        public static void SetPosXY(this Transform _transform, float _posX, float _posY)
         {
             _transform.position = new Vector3(_posX, _posY, _transform.position.z);
         }
-        public static float GetPositionX(this Transform _transform)
+        public static float GetX(this Transform _transform)
         {
             return _transform.position.x;
         }
-        public static float GetPositionY(this Transform _transform)
+        public static float GetY(this Transform _transform)
         {
             return _transform.position.y;
         }
-        public static float GetPositionZ(this Transform _transform)
+        public static float GetZ(this Transform _transform)
         {
             return _transform.position.z;
         }
-        public static void ShiftPositionX(this Transform _transform, float _offsetX)
+        public static void ShiftX(this Transform _transform, float _offsetX)
         {
             _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y, _transform.position.z);
         }
-        public static void ShiftPositionY(this Transform _transform, float _offsetY)
+        public static void ShiftY(this Transform _transform, float _offsetY)
         {
             _transform.position = new Vector3(_transform.position.x, _transform.position.y + _offsetY, _transform.position.z);
         }
-        public static void ShiftPositionZ(this Transform _transform, float _offsetZ)
+        public static void ShiftZ(this Transform _transform, float _offsetZ)
         {
             _transform.position = new Vector3(_transform.position.x, _transform.position.y, _transform.position.z + _offsetZ);
         }
         public static void Move(this Transform _transform, Vector2 _offset)
         {
-            _transform.position= new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z);
+            _transform.position = new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z);
         }
         public static void Move(this Transform _transform, Vector3 _offset)
         {
-            _transform.position= new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
+            _transform.position = new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
         }
         public static void Move(this Transform _transform, float _offsetX, float _offsetY)
         {
-            _transform.position= new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z);
+            _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z);
         }
         public static void Move(this Transform _transform, float _offsetX, float _offsetY, float _offsetZ)
         {
-            _transform.position= new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
+            _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
         }
-        public static void SetLocalPositionX(this Transform _transform, float _newX)
+        public static void SetLocalX(this Transform _transform, float _newX)
         {
             _transform.localPosition = new Vector3(_newX, _transform.position.y, _transform.position.z);
         }
-        public static void SetLocalPositionY(this Transform _transform, float _newY)
+        public static void SetLocalY(this Transform _transform, float _newY)
         {
             _transform.localPosition = new Vector3(_transform.position.x, _newY, _transform.position.z);
         }
-        public static void SetLocalPositionZ(this Transform _transform, float _newZ)
+        public static void SetLocalZ(this Transform _transform, float _newZ)
         {
             _transform.localPosition = new Vector3(_transform.position.x, _transform.position.y, _newZ);
         }
-        public static void SetLocalPosition(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
+        public static void SetLocalPos(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
         {
             _transform.localPosition = new Vector3(_posX, _posY, _posZ);
         }
-        public static void SetLocalPositionXY(this Transform _transform, float _posX, float _posY)
+        public static void SetLocalPosXY(this Transform _transform, float _posX, float _posY)
         {
             _transform.localPosition = new Vector3(_posX, _posY, _transform.localPosition.z);
         }
-        public static float GetLocalPositionX(this Transform _transform)
+        public static float GetLocalX(this Transform _transform)
         {
             return _transform.localPosition.x;
         }
-        public static float GetLocalPositionY(this Transform _transform)
+        public static float GetLocalY(this Transform _transform)
         {
             return _transform.localPosition.y;
         }
-        public static float GetLocalPositionZ(this Transform _transform)
+        public static float GetLocalZ(this Transform _transform)
         {
             return _transform.localPosition.z;
         }
@@ -181,12 +181,12 @@ namespace Arj2D
             int objLayerMask = (1 << _gameObject.layer);
             return (_layerMask.value & objLayerMask) > 0;
         }
-        public static T[] GetComponentsOnlyInChildren<T>(this GameObject _gameObject, bool _includeInactive= true) where T : Component
+        public static T[] GetComponentsOnlyInChildren<T>(this GameObject _gameObject, bool _includeInactive = true) where T : Component
         {
             T[] tmp = _gameObject.GetComponentsInChildren<T>(_includeInactive);
-            if(tmp[0].gameObject.GetInstanceID() == _gameObject.GetInstanceID())
+            if (tmp[0].gameObject.GetInstanceID() == _gameObject.GetInstanceID())
             {
-                System.Collections.Generic.List<T> list= new System.Collections.Generic.List<T>(tmp);
+                System.Collections.Generic.List<T> list = new System.Collections.Generic.List<T>(tmp);
                 list.RemoveAt(0);
                 return list.ToArray();
             }
@@ -283,7 +283,6 @@ namespace Arj2D
                 }
             }
         }
-
         /// <summary>
         /// Like SendMEssageUpwards but is not necessary the GameObject be active
         /// </summary>
@@ -299,7 +298,6 @@ namespace Arj2D
                 tranform = tranform.parent;
             }
         }
-
         /// <summary>
         /// Like BroadCastMessage but is not necessary the GameObject be active
         /// </summary>
@@ -374,11 +372,22 @@ namespace Arj2D
         {
             return new Vector3(_vector2.x, _vector2.y, _z);
         }
-        public static Vector2 Rotate(this Vector2 _vector2, float _rad)
+        public static Vector2 RotateRad(this Vector2 _vector2, float _rad)
         {
             float c = Mathf.Cos(_rad);
             float s = Mathf.Sin(_rad);
-            return new Vector2(_vector2.x *c - _vector2.y * s, _vector2.y = _vector2.x * s + _vector2.y * c);
+            return new Vector2(_vector2.x * c - _vector2.y * s, _vector2.y = _vector2.x * s + _vector2.y * c);
+        }
+        public static Vector2 Rotate(this Vector2 v, float degrees)
+        {
+            float s = Mathf.Sin(degrees * Mathf.Deg2Rad);
+            float c = Mathf.Cos(degrees * Mathf.Deg2Rad);
+
+            float tx = v.x;
+            float ty = v.y;
+            v.x = (c * tx) - (s * ty);
+            v.y = (s * tx) + (c * ty);
+            return v;
         }
         /// <summary>
         /// Return Vector2( X value, 0f)
@@ -386,7 +395,7 @@ namespace Arj2D
         /// <param name="_vector2"></param>
         /// <returns></returns>
         public static Vector2 OnlyX(this Vector2 _vector2)
-        { 
+        {
             return new Vector2(_vector2.x, 0f);
         }
         /// <summary>

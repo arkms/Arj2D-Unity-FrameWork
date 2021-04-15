@@ -8,7 +8,7 @@ public class scr_Character_LookAt : MonoBehaviour2D
     public float RotationSpeed = 100f;
 
     //Using point aroung a position
-    Vector3[] positionsAround;
+    Vector2[] positionsAround;
 
     void Start()
     {
