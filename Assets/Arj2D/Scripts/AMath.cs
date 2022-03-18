@@ -7,6 +7,18 @@ namespace Arj2D
         public const float PI2 = Mathf.PI * 2f;
         public const float TAU = Mathf.PI * 2f;
 
+        public static bool CompareFloat(float _a, float _b, float _margen = 0.001f)
+        {
+            if (_a == _b)
+            {
+                // Shortcut, handles infinities
+                return true;
+            }
+
+            float diff = Mathf.Abs(_a - _b);
+            return diff < _margen;
+        }
+
         /// <summary>
         /// Like Mathf.Sign, but return 0f with 0 and not 1f and can set a deadzone
         /// </summary>
@@ -16,17 +28,6 @@ namespace Arj2D
         public static float Sign(float _value, float _deadZone = 0f)
         {
             return _value > _deadZone ? 1f : (_value < -_deadZone ? -1f : 0f);
-        }
-
-        /// <summary>
-        /// Calculate the distance between two vector3, ignoring the Z
-        /// </summary>
-        /// <param name="_vA">Posistion of GameObjec1</param>
-        /// <param name="_vB">Posistion of GameObjec1</param>
-        /// <returns>distance in 2D</returns>
-        public static float Distance2D(Vector3 _vA, Vector3 _vB)
-        {
-            return (DistanceX(_vA, _vB) + DistanceY(_vA, _vB));
         }
 
         /// <summary>
@@ -89,6 +90,15 @@ namespace Arj2D
         {
             return Mathf.Abs(_vA.position.y - _vB.position.y);
         }
+
+        public static bool IsBetween(float _value, float _minInclusive, float _maxInclusive)
+        {
+            return !(_value < _minInclusive) && !(_value > _maxInclusive);
+        }
+
+        public static bool IsEven(int _value) => _value % 2 == 0;
+
+        public static bool IsOdd(int _value) => !IsEven(_value);
 
         /// <summary>
         /// Angle to Vector2
@@ -490,6 +500,7 @@ namespace Arj2D
         /// <param name="_center">Center where point going to generate</param>
         /// <param name="_radius">Radio or distance from center</param>
         /// <param name="_numberPoints">Number of points to generate</param>
+        /// <param name="_addAngularOffset">Offset add to the rotation</param>
         public static Vector2[] PointsAroundPosition(Vector3 _center, float _radius, int _numberPoints, float _addAngularOffset = 0f)
         {
             Vector2[] Points = new Vector2[_numberPoints];
@@ -499,7 +510,7 @@ namespace Arj2D
             {
                 Points[i].x = _radius * Mathf.Cos(rot) + _center.x;
                 Points[i].y = _radius * Mathf.Sin(rot) + _center.y;
-                rot = rot + rateRot;
+                rot += rateRot;
             }
             return Points;
         }

@@ -38,6 +38,7 @@ namespace Arj2D
         {
             return EditorApplication.isPlaying;
         }
+
     }
 
 }

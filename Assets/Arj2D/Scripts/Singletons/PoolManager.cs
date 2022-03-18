@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-//using System;
 using System.Collections.Generic;
-using Arj2D;
 
 public class PoolManager : MonoBehaviour
 {

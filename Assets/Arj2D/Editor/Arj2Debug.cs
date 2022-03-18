@@ -3,30 +3,8 @@ using UnityEditor;
 
 namespace Arj2D
 {
-    public class Arj2Debug
+    public static class Arj2Debug
     {
-        //Remove all shadow in MeshRenderes selected
-        [MenuItem("Arj2D/Debug/Remove Shadows")]
-        public static void RemoveShadows()
-        {
-            if (Selection.activeGameObject != null)
-            {
-                GameObject[] gos = Selection.gameObjects;
-                foreach (GameObject go in gos)
-                {
-                    MeshRenderer mr = go.GetComponent<MeshRenderer>();
-                    if (mr != null)
-                    {
-                        mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-                        //Change to this line for UNITY 4.x
-                        //mr.shadowCastingMode = false;
-                        mr.receiveShadows = false;
-                    }
-                }
-                Debug.Log("Done removing shadows");
-            }
-        }
-
         //Get center position of all childrens
         [MenuItem("Arj2D/Debug/Center")]
         public static void Center()
@@ -79,6 +57,35 @@ namespace Arj2D
                     Debug.LogWarning("There is not any GameObject with 'Player' TAG");
                 }
             }
+        }
+
+        // Set a Image pivot same as the sprite a version
+        [MenuItem("Arj2D/UI/ImageSetSpritePivot")]
+        public static void ImageSetSpritePivot()
+        {
+            if (Selection.activeGameObject)
+            {
+                GameObject go = Selection.activeGameObject;
+                UnityEngine.UI.Image img = go.GetComponent<UnityEngine.UI.Image>();
+                if (img)
+                {
+                    Undo.RecordObject(img.rectTransform, "Image pivot");
+                    Vector2 size = img.rectTransform.sizeDelta;
+                    size *= img.pixelsPerUnit;
+                    Vector2 pixelPivot = img.sprite.pivot;
+                    Vector2 percentPivot = new Vector2(pixelPivot.x / size.x, pixelPivot.y / size.y);
+                    img.rectTransform.pivot = percentPivot;
+                }
+                else
+                {
+                    Debug.LogWarning("You need select a Image");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("You need select a Image");
+            }
+
         }
     }
 }

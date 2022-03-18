@@ -1,20 +1,22 @@
-﻿using UnityEngine;
-//using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Arj2D
 {
     public static class UnityEngineExtensions
     {
         #region TRASNFORM
-        public static void X(this Transform _transform, float _newX)
+        public static void PosX(this Transform _transform, float _newX)
         {
             _transform.position = new Vector3(_newX, _transform.position.y, _transform.position.z);
         }
-        public static void Y(this Transform _transform, float _newY)
+        public static void PosY(this Transform _transform, float _newY)
         {
             _transform.position = new Vector3(_transform.position.x, _newY, _transform.position.z);
         }
-        public static void Z(this Transform _transform, float _newZ)
+        public static void PosZ(this Transform _transform, float _newZ)
         {
             _transform.position = new Vector3(_transform.position.x, _transform.position.y, _newZ);
         }
@@ -56,7 +58,7 @@ namespace Arj2D
         }
         public static void Move(this Transform _transform, Vector3 _offset)
         {
-            _transform.position = new Vector3(_transform.position.x + _offset.x, _transform.position.y + _offset.y, _transform.position.z + _offset.z);
+            _transform.position = _transform.position + _offset;
         }
         public static void Move(this Transform _transform, float _offsetX, float _offsetY)
         {
@@ -66,17 +68,23 @@ namespace Arj2D
         {
             _transform.position = new Vector3(_transform.position.x + _offsetX, _transform.position.y + _offsetY, _transform.position.z + _offsetZ);
         }
-        public static void SetLocalX(this Transform _transform, float _newX)
+        public static void SetPosLocalX(this Transform _transform, float _newX)
         {
-            _transform.localPosition = new Vector3(_newX, _transform.position.y, _transform.position.z);
+            Vector3 localPos = _transform.localPosition;
+            localPos.x = _newX;
+            _transform.localPosition = localPos;
         }
-        public static void SetLocalY(this Transform _transform, float _newY)
+        public static void SetPosLocalY(this Transform _transform, float _newY)
         {
-            _transform.localPosition = new Vector3(_transform.position.x, _newY, _transform.position.z);
+            Vector3 localPos = _transform.localPosition;
+            localPos.y = _newY;
+            _transform.localPosition = localPos;
         }
-        public static void SetLocalZ(this Transform _transform, float _newZ)
+        public static void SetPosLocalZ(this Transform _transform, float _newZ)
         {
-            _transform.localPosition = new Vector3(_transform.position.x, _transform.position.y, _newZ);
+            Vector3 localPos = _transform.localPosition;
+            localPos.z = _newZ;
+            _transform.localPosition = localPos;
         }
         public static void SetLocalPos(this Transform _transform, float _posX, float _posY, float _posZ = 0.0f)
         {
@@ -104,7 +112,7 @@ namespace Arj2D
         }
         public static void MoveLocal(this Transform _transform, Vector3 _offset)
         {
-            _transform.localPosition = new Vector3(_transform.localPosition.x + _offset.x, _transform.localPosition.y + _offset.y, _transform.localPosition.z + _offset.z);
+            _transform.localPosition = _transform.localPosition + _offset;
         }
         public static void MoveLocal(this Transform _transform, float _offsetX, float _offsetY)
         {
@@ -115,23 +123,30 @@ namespace Arj2D
             _transform.localPosition = new Vector3(_transform.localPosition.x + _offsetX, _transform.localPosition.y + _offsetY, _transform.localPosition.z + _offsetZ);
         }
         /// <summary>
-        /// Flip a transform, use for Flip Sprite
+        /// Flip a transform in X, flip from current scale
         /// </summary>
-        public static void Flip(this Transform _transform)
+        public static void FlipX(this Transform _transform)
         {
             _transform.localScale = new Vector3(_transform.localScale.x * -1f, _transform.localScale.y, _transform.localScale.z);
         }
         /// <summary>
-        /// Flip a transform, use for Flip Sprite
+        /// Flip a transform in Y
         /// </summary>
-        public static void Flip(this Transform _transform, bool _facingRight)
+        public static void FlipY(this Transform _transform, bool _facingRight)
         {
             Vector3 theScale = _transform.localScale;
             if (_facingRight)
-                theScale.x = Mathf.Abs(theScale.x);
+                theScale.y = Mathf.Abs(theScale.y);
             else
-                theScale.x = -Mathf.Abs(theScale.x);
+                theScale.y = -Mathf.Abs(theScale.y);
             _transform.localScale = theScale;
+        }
+        /// <summary>
+        /// Flip a transform in Y, flip from current scale
+        /// </summary>
+        public static void FlipY(this Transform _transform)
+        {
+            _transform.localScale = new Vector3(_transform.localScale.x, _transform.localScale.y * -1f, _transform.localScale.z);
         }
         /// <summary>
         /// Reset only position and rotation. Scale is not affected
@@ -148,7 +163,7 @@ namespace Arj2D
         {
             _transform.position = Vector3.zero;
             _transform.rotation = Quaternion.identity;
-            _transform.localScale = Vector3.zero;
+            _transform.localScale = Vector3.one;
         }
         public static void LookAt2D(this Transform _transform, Transform _target, float _offset = 0f)
         {
@@ -210,7 +225,7 @@ namespace Arj2D
         }
 
         /// <summary>
-        /// Find the first GameObject with a name,, starting in a father and search in each children of children until first GameObject with the name
+        /// Find the first GameObject with a name,, starting in a father and search in each children of children until first GameObject with the name. Include disable gameobjects
         /// </summary>
         /// <param name="_gameObject">GameObject where start</param>
         /// <param name="name">Name of GameObject to find</param>
@@ -262,63 +277,6 @@ namespace Arj2D
 
             return string.Join("/", path.ToArray());
         }
-
-        /*
-        /// <summary>
-        /// Like SendMessage but is not necessary the GameObject be active
-        /// </summary>
-        /// <param name="_gameObject">GameObject to BroadCastMenssage</param>
-        /// <param name="_methodName">Name of function to call</param>
-        /// <param name="_parameters">Parameters (optional)</param>
-        public static void SendMessageSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
-        {
-            MonoBehaviour[] components = _gameObject.GetComponents<MonoBehaviour>();
-            for (int i = 0; i < components.Length; i++)
-            {
-                Type scriptType = components[i].GetType();//Get ScriptType //This not return MonoBehaviour
-                MethodInfo methodInfo = scriptType.GetMethod(_methodName);
-                if (scriptType.GetMethod(_methodName) != null) //This script contains this Method?
-                {
-                    methodInfo.Invoke(components[i], _parameters); //call It
-                }
-            }
-        }
-        /// <summary>
-        /// Like SendMEssageUpwards but is not necessary the GameObject be active
-        /// </summary>
-        /// <param name="_gameObject">GameObject to SendMenssage</param>
-        /// <param name="_methodName">Name of function to call</param>
-        /// <param name="_parameters">Parameters (optional)</param>
-        public static void SendMessageUpwardsSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
-        {
-            Transform tranform = _gameObject.transform;
-            while (tranform != null)
-            {
-                tranform.gameObject.SendMessageSpecial(_methodName, _parameters);
-                tranform = tranform.parent;
-            }
-        }
-        /// <summary>
-        /// Like BroadCastMessage but is not necessary the GameObject be active
-        /// </summary>
-        /// <param name="_gameObject">GameObject to BroadCastMenssage</param>
-        /// <param name="_methodName">Name of function to call</param>
-        /// <param name="_parameters">Parameters (optional)</param>
-        public static void BroadCastMessageSpecial(this GameObject _gameObject, string _methodName, params object[] _parameters)
-        {
-            MonoBehaviour[] components = _gameObject.GetComponentsInChildren<MonoBehaviour>(true);
-            for (int i = 0; i < components.Length; i++)
-            {
-                Type scriptType = components[i].GetType();//Get ScriptType //This not return MonoBehaviour
-                MethodInfo methodInfo = scriptType.GetMethod(_methodName);
-                if (scriptType.GetMethod(_methodName) != null) //This script contains this Method?
-                {
-                    methodInfo.Invoke(components[i], _parameters); //call It
-                }
-            }
-        }*/
-
-
         #endregion
 
         #region TEXTURE2D
@@ -540,6 +498,51 @@ namespace Arj2D
                 return true;
 
             return false;
+        }
+        #endregion
+
+        #region LIST_DICTIONARY
+
+        public static bool IsEmpty<T>(this IEnumerable<T> collection)
+            => !collection.Any();
+
+        public static IEnumerable<T> Subsequence<T>(this IEnumerable<T> collection, int startIndex, int length)
+        {
+            return collection.Skip(startIndex).Take(length);
+        }
+
+        /// <summary>
+        /// Removes all entries from a dictionary with the specified value.
+        /// </summary>
+        public static void RemoveAllEntriesWithValue<T1, T2>(this IDictionary<T1, T2> dictionary, T2 value)
+        {
+            foreach (var matchingEntry in dictionary.Where(kvp => kvp.Value.Equals(value)).ToArray())
+                dictionary.Remove(matchingEntry.Key);
+        }
+
+        public static T[] Duplicate<T>(this T[] sourceArray)
+        {
+            if (sourceArray == null)
+                return null;
+
+
+            var duplicateArray = new T[sourceArray.Length];
+            Array.Copy(sourceArray, duplicateArray, sourceArray.Length);
+
+            return duplicateArray;
+        }
+
+        public static T[] Duplicate<T>(this IReadOnlyList<T> sourceList)
+        {
+            if (sourceList == null)
+                return null;
+
+
+            var duplicateArray = new T[sourceList.Count];
+            for (int i = 0; i < sourceList.Count; i++)
+                duplicateArray[i] = sourceList[i];
+
+            return duplicateArray;
         }
         #endregion
     }

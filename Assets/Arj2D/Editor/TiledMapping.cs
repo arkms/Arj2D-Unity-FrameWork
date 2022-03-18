@@ -221,9 +221,7 @@ public class TiledMapping : EditorWindow
 
         // Draw marker position
         Handles.color = Color.red;
-#pragma warning disable 0618
-        Handles.RectangleCap(0, MouseInTiled, Quaternion.identity, 0.5f);
-#pragma warning restore 0618
+        Handles.RectangleHandleCap(0, MouseInTiled, Quaternion.identity, 0.5f, EventType.MouseMove);
     }
 
 

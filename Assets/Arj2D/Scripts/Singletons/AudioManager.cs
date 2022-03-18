@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
-{    
+{
     private AudioSource Sound;
     private AudioSource Background;
 
     //A very simplea way o use this is only call
     /*
+     * Init()
      * Play(audioclip)
      * PlayMusic(audioclip)
      * StopMusic()
@@ -17,11 +19,11 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Key for save sound or fx with PlayerPrefs
     /// </summary>
-    public const string K_sound = "k_sound_fx";
+    const string K_sound = "k_sound_fx";
     /// <summary>
     /// Key for save music or background with PlayerPrefs
     /// </summary>
-    public const string K_music = "k_sound_back";
+    const string K_music = "k_sound_back";
     /// <summary>
     /// List of AudioSource in case we need play sounds of fx with loop // or pitch? (TODO)
     /// </summary>
@@ -45,18 +47,28 @@ public class AudioManager : MonoBehaviour
         return Sound.enabled;
     }
 
-    public void Play(AudioClip _clip)
+    public static void Play(AudioClip _clip)
     {
-        if(IsEnable_fx())
+        instance.Play_(_clip);
+    }
+
+    void Play_(AudioClip _clip)
+    {
+        if (IsEnable_fx())
             Sound.PlayOneShot(_clip);
     }
 
     public void ChangeVolumenSound(float _volumen)
     {
-        Sound.volume= _volumen;
+        Sound.volume = _volumen;
     }
 
-    public void StopAll()
+    public static void StopAll()
+    {
+        instance.StopAll_();
+    }
+
+    void StopAll_()
     {
         Sound.Stop();
         Background.Stop();
@@ -65,14 +77,18 @@ public class AudioManager : MonoBehaviour
 
 
     // BackGround ------------------------------------------------------
-    public void PlayMusic(AudioClip _clip)
+    public static void PlayMusic(AudioClip _clip)
+    {
+        instance.PlayMusic_(_clip);
+    }
+    void PlayMusic_(AudioClip _clip)
     {
         if (Background.clip != _clip)
         {
             Background.Stop();
             Background.clip = _clip;
             //Resources.UnloadUnusedAssets();
-            if(Background.enabled)
+            if (Background.enabled)
                 Background.Play();
         }
     }
@@ -94,7 +110,7 @@ public class AudioManager : MonoBehaviour
 
     public void ChangeVolumenMusic(float _volumen)
     {
-        Background.volume= _volumen;
+        Background.volume = _volumen;
     }
 
     public bool IsEnableMusic()
@@ -310,7 +326,7 @@ public class AudioManager : MonoBehaviour
             AudioSource newAudioSource = go.AddComponent<AudioSource>();
             newAudioSource.playOnAwake = false;
             list_extraSnd.Add(newAudioSource);
-            return list_extraSnd.Count-1;
+            return list_extraSnd.Count - 1;
         }
 
         //we add other
@@ -318,6 +334,59 @@ public class AudioManager : MonoBehaviour
         newAudioSource2.playOnAwake = false;
         list_extraSnd.Add(newAudioSource2);
         return list_extraSnd.Count - 1;
+    }
+
+    public void AudioSourcePlayWithFade(AudioSource _audioSource, float _duration)
+    {
+        StartCoroutine(AudioSourcecFade(_audioSource, _duration));
+    }
+
+    IEnumerator AudioSourcecFade(AudioSource _audioSource, float _duration)
+    {
+        float currentTime = 0f;
+        float finalVolume = _audioSource.volume;
+        _audioSource.volume = 0f;
+
+        while (currentTime < _duration)
+        {
+            currentTime += Time.deltaTime;
+            _audioSource.volume = Mathf.Lerp(0f, finalVolume, currentTime / _duration);
+            yield return null;
+        }
+    }
+
+    public void AudioSourceChangeClipWithFade(AudioSource _audioSource, AudioClip _clip, float _duration, float _lag = 0f)
+    {
+        StartCoroutine(AudioSourcecFade(_audioSource, _clip, _duration, _lag));
+    }
+
+    IEnumerator AudioSourcecFade(AudioSource _audioSource, AudioClip _clip, float _duration, float _lag)
+    {
+        float currentTime = 0f;
+        float finalVolume = _audioSource.volume;
+        float duration_2 = _duration / 2f;
+
+        //Fade out
+        while (currentTime < duration_2)
+        {
+            currentTime += Time.deltaTime;
+            _audioSource.volume = Mathf.Lerp(finalVolume, 0f, currentTime / duration_2);
+            yield return null;
+        }
+
+        _audioSource.Stop();
+        _audioSource.clip = _clip;
+        _audioSource.time = _lag;
+        _audioSource.Play();
+
+        //Fade in
+        currentTime = 0f;
+        while (currentTime < duration_2)
+        {
+            currentTime += Time.deltaTime;
+            _audioSource.volume = Mathf.Lerp(0f, finalVolume, currentTime / duration_2);
+            yield return null;
+        }
     }
 
     private static AudioManager instance = null;
@@ -342,10 +411,12 @@ public class AudioManager : MonoBehaviour
             instance.Sound = go.AddComponent<AudioSource>();
             instance.Sound.loop = false;
             instance.Sound.playOnAwake = false;
+            instance.Sound.volume = 0.45f;
             instance.Background = go.AddComponent<AudioSource>();
             instance.Background.priority = 255;
             instance.Background.playOnAwake = false;
             instance.Background.loop = true;
+            instance.Background.volume = 0.5f;
             int soundEnable = PlayerPrefs.GetInt(K_sound, 1);
             if (soundEnable == 0)
             {
