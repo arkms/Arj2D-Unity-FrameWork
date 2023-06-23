@@ -48,16 +48,14 @@ namespace Arj2D
         /// </summary>
         /// <param name="_pos">Position</param>
         /// <param name="_rotation">Rotation</param>
-        /// <param name="_autoTurnOn">Call SetActive(_autoTurnOn)</param>
         /// <returns>GameObject create</returns>
-        public GameObject Spawn(Vector3 _pos, Quaternion _rotation, bool _autoTurnOn= true)
+        public GameObject Spawn(Vector3 _pos, Quaternion _rotation)
         {
             //Not anyone free,, lets create more
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
             go.transform.localRotation = _rotation;
-            if(_autoTurnOn)
-                go.SetActive(true);
+            go.SetActive(true);
             return go;
         }
 
@@ -65,14 +63,12 @@ namespace Arj2D
         /// Spawn new object
         /// </summary>
         /// <param name="_pos">Position</param>
-        /// <param name="_autoTurnOn">Call SetActive(_autoTurnOn)</param>
         /// <returns>GameObject create</returns>
-        public GameObject Spawn(Vector3 _pos, bool _autoTurnOn= true)
+        public GameObject Spawn(Vector3 _pos)
         {
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
-            if(_autoTurnOn)
-                go.SetActive(true);
+            go.SetActive(true);
             return go;
         }
 
@@ -80,14 +76,13 @@ namespace Arj2D
         /// Spawn new object, using vector2
         /// </summary>
         /// <param name="_pos">Position</param>
-        /// <param name="_autoTurnOn">Call SetActive(_autoTurnOn)</param>
+        /// <param name="_rotation">Rotation</param>
         /// <returns>GameObject create</returns>
-        public GameObject Spawn(Vector2 _pos, bool _autoTurnOn= true)
+        public GameObject Spawn(Vector2 _pos)
         {
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
-            if(_autoTurnOn)
-                go.SetActive(true);
+            go.SetActive(true);
             return go;
         }
 

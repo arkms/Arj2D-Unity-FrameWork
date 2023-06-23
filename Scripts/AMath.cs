@@ -261,6 +261,11 @@ namespace Arj2D
         {
             return new Vector2((_destiny.position.x - _origin.position.x), (_destiny.position.y - _origin.position.y)).normalized;
         }
+        
+        public static Vector2 DirectionV2(Transform _origin, Vector2 _destiny)
+        {
+            return new Vector2((_destiny.x - _origin.position.x), (_destiny.y - _origin.position.y)).normalized;
+        }
 
         public static float GetAngle(Transform _origin, Transform _target)
         {

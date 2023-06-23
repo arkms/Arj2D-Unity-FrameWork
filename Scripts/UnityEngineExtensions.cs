@@ -610,13 +610,11 @@ namespace Arj2D
             CheckIsEnum<T>(true);
 #endif
             long lFlag = Convert.ToInt64(flag);
+
             if (lFlag == -1)
                 return true;
 
             long lValue = Convert.ToInt64(value);
-            if (lValue == -1)
-                return true;
-            
             return (lValue & lFlag) != 0;
         }
 

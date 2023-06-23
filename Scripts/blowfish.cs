@@ -1003,6 +1003,13 @@ namespace Arj2D
             PlayerPrefs.SetString(key, text);
         }
 
+        public static void SetString(string _key, string _value)
+        {
+            string text = GetKey().Encrypt_CBC(_value);
+            string key = GetKey().Encrypt_ECB(_key);
+            PlayerPrefs.SetString(key, text);
+        }
+
         public static int GetInt(string _key, int _default = 0)
         {
             _key = GetKey().Encrypt_ECB(_key);
@@ -1048,6 +1055,14 @@ namespace Arj2D
             _key = GetKey().Encrypt_ECB(_key);
             if (PlayerPrefs.HasKey(_key))
                 return GetKey().Desconvert_Afloat(GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key)));
+            return _default;
+        }
+
+        public static string GetString(string _key, string _default = null)
+        {
+            _key = GetKey().Encrypt_ECB(_key);
+            if (PlayerPrefs.HasKey(_key))
+                return GetKey().Decrypt_CBC(PlayerPrefs.GetString(_key));
             return _default;
         }
     }

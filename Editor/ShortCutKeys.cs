@@ -6,7 +6,7 @@ namespace Arj2D
     public class ShortCutKeys
     {
         private const string ITEM_NAME_RUN = "Edit/Plus/Run _F5";
-        private const string ITEM_NAME_PAUSE = "Edit/Plus/Run _F6";
+        private const string ITEM_NAME_PAUSE = "Edit/Plus/Pause _F7";
         private const string ITEM_NAME_STOP = "Edit/Plus/Stop #_F5";
 
         [MenuItem(ITEM_NAME_RUN)]
