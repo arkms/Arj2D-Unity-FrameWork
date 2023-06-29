@@ -4,6 +4,7 @@ namespace Arj2D
 {
     public static class AMath
     {
+        
         public const float PI2 = Mathf.PI * 2f;
         public const float TAU = Mathf.PI * 2f;
 
