@@ -3,6 +3,7 @@
 [Ll]ogs/
 [Oo]bj/
 .vs/
+.vscode/
 .idea/
 Assets/Plugins/Editor/JetBrains/
 Assets/Plugins/Editor/JetBrains.meta
@@ -68,3 +69,5 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 UserSettings/EditorUserSettings.asset
+
+Keys/
