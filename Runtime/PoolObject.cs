@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+// Note: The gameobject is never activate by any spawn, is better activate when you finish all your setup you need.
+
 namespace Arj2D
 {
     public class PoolObject
     {
-        private GameObject Prefab;
-        private List<GameObject> Pool;
-        private Transform transform_; //father transform
-
-        private int lastIndexUsed = -1;
+        private GameObject prefab;
+        private Queue<GameObject> pool;
+        private Transform parentTranform; //father transform
 
         /// <summary>
         /// Add Prefab to Pool
@@ -18,19 +18,18 @@ namespace Arj2D
         /// <param name="_size">Inicial number of prefab</param>
         public void Init(GameObject _prefab, int _size = 3)
         {
-            if (transform_ == null)
+            if (parentTranform == null)
             {
                 GameObject go = new GameObject(_prefab.name + "_Pool");
-                transform_ = go.transform;
+                parentTranform = go.transform;
 
-                Prefab = _prefab;
-                Pool = new List<GameObject>();
+                prefab = _prefab;
+                pool = new Queue<GameObject>(_size);
             }
-            if (Pool.Count < _size)
-                for (int i = 0; i < _size; i++)
-                {
-                    Expand();
-                }
+            for (int i = 0; i < _size; i++)
+            {
+                Expand();
+            }
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace Arj2D
         /// <returns>true or false if pool initialize</returns>
         public bool IsInit()
         {
-            return transform_ != null;
+            return pool != null;
         }
 
         // --------------------------------------------
@@ -55,7 +54,6 @@ namespace Arj2D
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
             go.transform.localRotation = _rotation;
-            go.SetActive(true);
             return go;
         }
 
@@ -68,7 +66,6 @@ namespace Arj2D
         {
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
-            go.SetActive(true);
             return go;
         }
 
@@ -82,46 +79,15 @@ namespace Arj2D
         {
             GameObject go = GetNextGameObject();
             go.transform.localPosition = _pos;
-            go.SetActive(true);
             return go;
         }
-
-        public GameObject Spawn(bool _autoActive = true)
-        {
-            GameObject go = GetNextGameObject();
-            if (_autoActive)
-                go.SetActive(true);
-            return go;
-        }
-
-        private int activeGameObjects;
-        public int CountActive()
-        {
-            activeGameObjects = 0;
-            int poolSize = Pool.Count;
-
-            for (int i = 0; i < poolSize; i++)
-            {
-                if (Pool[i].activeSelf == true)
-                {
-                    activeGameObjects++;
-                }
-            }
-            return activeGameObjects;
-        }
-        
 
         /// <summary>
-        /// Disable all Gameobject in the Pool
+        /// Clear all reference from pool.
         /// </summary>
         public void Clear()
         {
-            foreach (var go in Pool)
-            {
-                go.SetActive(false);
-            }
-
-            lastIndexUsed = -1;
+            pool.Clear();
         }
 
         /// <summary>
@@ -129,52 +95,33 @@ namespace Arj2D
         /// </summary>
         public void ClearAndDestroy()
         {
-            for (int i = 0; i < Pool.Count; i++)
+            foreach (GameObject go in pool)
             {
-                GameObject.Destroy(Pool[i]);
-                Pool[i] = null;
+                Object.Destroy(go);
             }
 
-            lastIndexUsed = -1;
-            Pool.Clear();
+            pool.Clear();
+        }
+
+        public void ReturnGameObjectToPool(GameObject _go)
+        {
+            _go.SetActive(false);
+            pool.Enqueue(_go);
         }
 
         private GameObject Expand()
         {
-            GameObject go = GameObject.Instantiate(Prefab, transform_);
-            Pool.Add(go);
+            GameObject go = Object.Instantiate(prefab, parentTranform);
+            pool.Enqueue(go);
+            go.name = $"{prefab.name}_{parentTranform.childCount}";
+            go.GetComponent<IPoolObject>().poolContainer = this;
             go.SetActive(false);
-            go.name = $"{Prefab.name}_{Pool.Count}";
             return go;
         }
 
         GameObject GetNextGameObject()
         {
-            int poolCount = Pool.Count;
-            if (poolCount > 0)
-            {
-                int i = lastIndexUsed;
-                do
-                {
-                    i++;
-                    if (i >= poolCount)
-                    {
-                        i = 0;
-                    }
-
-                    if (!Pool[i].activeSelf)
-                    {
-                        lastIndexUsed = i;
-                        return Pool[i];
-                    }
-
-
-                } while (i != lastIndexUsed);
-
-                lastIndexUsed = poolCount;
-            }
-
-            return Expand();
+            return pool.Count > 0 ? pool.Dequeue() : Expand();
         }
     }
 }
