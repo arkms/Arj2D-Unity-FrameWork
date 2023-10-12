@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Arj2D
 {
@@ -39,15 +36,15 @@ namespace Arj2D
             }
         }
         
-        public Timer(float duration)
+        public Timer(float _duration)
         {
             TimerManager.SetupTimer(this);
-            duration = duration;
+            duration = _duration;
         }
         
-        public Timer(float endTime, Action function) : this(endTime)
+        public Timer(float _endTime, Action _function) : this(_endTime)
         {
-            OnTimerEnd += function;
+            OnTimerEnd += _function;
         }
 
         public void Pause()
@@ -88,13 +85,13 @@ namespace Arj2D
             Play();
         }
 
-        public void Update(float delta)
+        public void Update(float _delta)
         {
             if (state != TimerState.UPDATING)
                 return;
             
             OnTimerUpdate?.Invoke();
-            TimeLeft -= delta;
+            TimeLeft -= _delta;
         }
 
         public float GetPercentage()
