@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,8 +11,11 @@ namespace Arj2D
 
         private void Update()
         {
-            foreach (Timer t in timers)
-                t.Update(Time.deltaTime);
+            int timersCount = timers.Count;
+            for (int i = 0; i < timersCount; i++)
+            {
+                timers[i].Update(Time.deltaTime);
+            }
         }
 
         public static void SetupTimer(Timer t)
