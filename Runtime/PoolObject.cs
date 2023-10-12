@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-// Note: The gameobject is never activate by any spawn, is better activate when you finish all your setup you need.
+// Note: The gameobject is never activate by any spawn, is better activate when you finish all your setup you need. You can use Spawned from IPoolObject.cs
 
 namespace Arj2D
 {
     public class PoolObject
     {
         private GameObject prefab;
-        private Queue<GameObject> pool;
+        private Queue<PoolObjectStruct> pool;
         private Transform parentTranform; //father transform
 
         /// <summary>
@@ -18,14 +18,16 @@ namespace Arj2D
         /// <param name="_size">Inicial number of prefab</param>
         public void Init(GameObject _prefab, int _size = 3)
         {
+            if (pool != null) // Security
+                return;
+            
             if (parentTranform == null)
             {
                 GameObject go = new GameObject(_prefab.name + "_Pool");
                 parentTranform = go.transform;
-
-                prefab = _prefab;
-                pool = new Queue<GameObject>(_size);
             }
+            prefab = _prefab;
+            pool = new Queue<PoolObjectStruct>(_size);
             for (int i = 0; i < _size; i++)
             {
                 Expand();
@@ -51,10 +53,10 @@ namespace Arj2D
         public GameObject Spawn(Vector3 _pos, Quaternion _rotation)
         {
             //Not anyone free,, lets create more
-            GameObject go = GetNextGameObject();
-            go.transform.localPosition = _pos;
-            go.transform.localRotation = _rotation;
-            return go;
+            PoolObjectStruct go = GetNextGameObject();
+            go.gameObject.transform.SetLocalPositionAndRotation(_pos, _rotation);
+            go.iPoolScript.Spawned();
+            return go.gameObject;
         }
 
         /// <summary>
@@ -64,9 +66,10 @@ namespace Arj2D
         /// <returns>GameObject create</returns>
         public GameObject Spawn(Vector3 _pos)
         {
-            GameObject go = GetNextGameObject();
-            go.transform.localPosition = _pos;
-            return go;
+            PoolObjectStruct go = GetNextGameObject();
+            go.gameObject.transform.localPosition = _pos;
+            go.iPoolScript.Spawned();
+            return go.gameObject;
         }
 
         /// <summary>
@@ -77,9 +80,10 @@ namespace Arj2D
         /// <returns>GameObject create</returns>
         public GameObject Spawn(Vector2 _pos)
         {
-            GameObject go = GetNextGameObject();
-            go.transform.localPosition = _pos;
-            return go;
+            PoolObjectStruct go = GetNextGameObject();
+            go.gameObject.transform.localPosition = _pos;
+            go.iPoolScript.Spawned();
+            return go.gameObject;
         }
 
         /// <summary>
@@ -95,33 +99,52 @@ namespace Arj2D
         /// </summary>
         public void ClearAndDestroy()
         {
-            foreach (GameObject go in pool)
+            foreach (PoolObjectStruct go in pool)
             {
-                Object.Destroy(go);
+                Object.Destroy(go.gameObject);
             }
 
             pool.Clear();
         }
 
-        public void ReturnGameObjectToPool(GameObject _go)
+        public void ReturnGameObjectToPool(GameObject _go, IPoolObject _iPool)
         {
             _go.SetActive(false);
-            pool.Enqueue(_go);
+            pool.Enqueue(new PoolObjectStruct()
+            {
+                gameObject = _go,
+                iPoolScript = _iPool
+            });
         }
 
-        private GameObject Expand()
+        private PoolObjectStruct Expand()
         {
             GameObject go = Object.Instantiate(prefab, parentTranform);
-            pool.Enqueue(go);
+            IPoolObject iPool = go.GetComponent<IPoolObject>();
+            
+            PoolObjectStruct poolObject = new PoolObjectStruct()
+            {
+                gameObject = go,
+                iPoolScript = iPool
+            };
+            
+            pool.Enqueue(poolObject);
             go.name = $"{prefab.name}_{parentTranform.childCount}";
-            go.GetComponent<IPoolObject>().poolContainer = this;
+            iPool.poolContainer = this;
             go.SetActive(false);
-            return go;
+            
+            return poolObject;
         }
 
-        GameObject GetNextGameObject()
+        PoolObjectStruct GetNextGameObject()
         {
             return pool.Count > 0 ? pool.Dequeue() : Expand();
+        }
+
+        struct PoolObjectStruct
+        {
+            public GameObject gameObject;
+            public IPoolObject iPoolScript;
         }
     }
 }
