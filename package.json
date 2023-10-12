@@ -1,0 +1,22 @@
+{
+    "name": "com.arkms.arj2d",
+    "displayName": "Arj2d",
+    "version": "0.9.0",
+    "unity": "2022.2",
+    "description": "Basic scripts to use in all Unity projects. Most of scripts are for 2d, but also work for 3d projects.",
+    "keywords": [],
+    "category": "",
+    "author": {
+      "name": "Arkms",
+      "email": "",
+      "url": "https://github.com/arkms/Arj2D-Unity-FrameWork/tree/master"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/arkms/Arj2D-Unity-FrameWork.git",
+      "directory": "com.arkms.arj2d"
+    },
+    "publishConfig": {
+      "registry": "https://npm.pkg.github.com/@arkms"
+    }
+  }
